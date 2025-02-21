@@ -1,0 +1,127 @@
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+  <div class="card mt-2 w-50 mx-auto">
+    <div class="card-header border-0 bg-white">
+      <div class="card-title">
+        <h3 class="text-center">User Profile</h3>
+      </div>
+    </div>
+    <div class="card-body">
+      @if(imageLink && !uploadedImage) {
+        <img [src]="imageLink" alt="user-image" class="card-img-top w-15 d-flex justify-content-center align-items-center mx-auto rounded-bottom"/>
+      } @else if (uploadedImage) {
+        <img [src]="uploadedImage" alt="user-image" class="card-img-top w-15 d-flex justify-content-center align-items-center mx-auto rounded-bottom"/>
+      }
+      @else {
+        <img src="https://www.citypng.com/public/uploads/preview/white-user-member-guest-icon-png-image-701751695037005zdurfaim0y.png" alt="user-image" class="card-img-top w-15 d-flex justify-content-center align-items-center mx-auto rounded-bottom"/>
+      }
+      @if(editButtonClicked == true) {
+        <form>
+          <div class="form-group">
+            <label for="imageUpload" class="d-flex justify-content-center mx-auto w-25 btn btn-primary mt-2">Upload Image</label>
+            <input type="file" id="imageUpload" accept="image/*" (change)="onFileChange($event)" style="display: none;">
+          </div>
+          <!-- Display uploaded image name -->
+          @if(uploadedImage) {
+            <div class="mt-2 text-center">
+              <p><strong>Uploaded Image Name: </strong>{{ uploadedImageName }}</p>
+            </div>
+          }
+          <div class="form-group">
+            <label for="name" class="mb-1">User Name</label>
+            <input type="text" class="form-control mb-1" id="name" aria-describedby="emailHelp" required [(ngModel)]="userName" name="userName">
+          </div>
+          <div class="form-group">
+            <label for="email" class="mb-1">User Email</label>
+            <input type="email" class="form-control mb-1" id="email" aria-describedby="emailHelp" required [(ngModel)]="userEmail" name="userEmail">
+          </div>
+          <div class="form-group">
+            <label for="password" class="mb-1">Joined Date</label>
+            <input type="text" class="form-control mb-1" id="password" required [(ngModel)]="joinedDate" name="joinedDate" disabled>
+          </div>
+          <div class="d-flex align-items-center justify-content-center">
+            <button type="submit" class="btn btn-info w-20 mt-2 text-white" (click)="updateProfile()">
+              <!-- Conditional Spinner or Text -->
+              @if(isLoading == true) {
+                <i class="fas fa-spinner fa-spin"></i>
+              } @else {
+                <span>Update Profile</span>
+              }
+            </button>
+            <button type="submit" class="btn btn-warning w-20 mt-2 text-white ms-2" (click)="deleteProfile()">
+              <!-- Conditional Spinner or Text -->
+              @if(isLoading == true) {
+                <i class="fas fa-spinner fa-spin"></i>
+              } @else {
+                <span>Delete Profile</span>
+              }
+            </button>
+            <button type="submit" class="btn btn-danger w-20 mt-2 ms-2" (click)="cancelUpdate()">
+              <!-- Conditional Spinner or Text -->
+              @if(isLoading == true) {
+                <i class="fas fa-spinner fa-spin"></i>
+              } @else {
+                <span>Cancel</span>
+              }
+            </button>
+          </div>
+        </form>
+      } @else {
+        <h5 class="text-center mt-3">User Name: {{userName}}</h5>
+        <h5 class="text-center mt-3">User Email: {{userEmail}}</h5>
+        <h5 class="text-center mt-3">Joined Date: {{joinedDate}}</h5>
+        <h5 class="text-center mt-3">Books Purchased:
+          @if(purchasedBooks.length > 0) {
+            <div class="card card-body mt-2 mb-2 border-0">
+              <ul>
+                @for(index of purchasedBooks; track index; let i = $index) {
+                  <li>{{purchasedBooks[index]}}</li>
+                }
+              </ul>
+            </div>
+          } @else {
+            <div class="card card-body mt-2 mb-2 border-0">
+              <span class="text-danger">No Books Purchased!</span>
+            </div>
+          }
+        </h5>
+        <h5 class="text-center mt-3">User Cart:
+          @if(cart.length > 0) {
+            <div class="card card-body mt-2 mb-2 me-5 ms-5" *ngFor="let item of cart; let i = index; trackBy: trackByIndex">
+              <div class="row align-items-center g-3">
+                <!-- Image Column -->
+                <div class="col-4 col-sm-2 text-center">
+                  <img [src]="'http://localhost:8000/uploads/' + item.image.name" class="img-fluid rounded" style="max-width: 100px;">
+                </div>
+                <!-- Details Column -->
+                <div class="col-12 col-sm-10">
+                  <div class="row">
+                    <div class="col-12 col-md-8">
+                      <p class="mb-1 fw-bold">Name: {{ item.name }}</p>
+                      <p class="mb-1 text-muted">From: {{ item.publishers }}</p>
+                    </div>
+                    <div class="col-12 col-md-4 text-md-end">
+                      <p class="mb-1 fw-semibold">Price: {{ item.price }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          } @else {
+            <div class="card card-body mt-2 mb-2 border-0">
+              <span class="text-danger">Cart is Empty!</span>
+            </div>
+          }
+        </h5>
+        <div class="justify-content-center d-flex gap-3">
+          @if(loggedUserName == null || loggedUserName == "" || loggedUserName == undefined) {
+            <button class="btn btn-primary w-20 mt-2 d-flex justify-content-center align-items-center" (click)="editProfile()" disabled>Edit Profile</button>
+            <button class="btn btn-danger w-20 mt-2 d-flex justify-content-center align-items-center" (click)="backToHome()" disabled>Back to Home</button>
+          } @else {
+            <button class="btn btn-primary w-20 mt-2 d-flex justify-content-center align-items-center" (click)="editProfile()">Edit Profile</button>
+            <button class="btn btn-danger w-20 mt-2 d-flex justify-content-center align-items-center" (click)="backToHome()">Back to Home</button>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="container-fluid p-1 mb-1" id="contact-us">
+  <div class="card backgound-img">
+    <div class="card-body">
+      <div class="card-title">
+        <h3 class="text-center">Contact Us</h3>
+      </div>
+      <div class="card-text pt-2">
+        <h5 class="text-center justify-content-center mt-2">
+          If there is anything you need to clarify, please send us an email message, so we can help you with that.
+        </h5>
+      </div>
+      <form class="p-3 align-items-center justify-content-center w-50 mx-auto" (ngSubmit)="submit()">
+        <div class="card card-body">
+          <h5 class="text-center justify-content-center fw-bold">Contact Us</h5>
+          <div class="form-group">
+            <label for="name" class="mb-1">Name</label>
+            <input type="text" class="form-control mb-1" id="name" aria-describedby="emailHelp" placeholder="Enter email" required [(ngModel)]="name" name="name">
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+          </div>
+          <div class="form-group">
+            <label for="email" class="mb-1">Email address</label>
+            <input type="email" class="form-control mb-1" id="email" aria-describedby="emailHelp" placeholder="Enter email" required [(ngModel)]="email" name="email">
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+          </div>
+          <div class="form-group">
+            <label for="message" class="mb-1">Message</label>
+            <textarea class="form-control mb-2" id="message" rows="3" placeholder="Your message" required [(ngModel)]="message" name="message"></textarea>
+          </div>
+          <div class="d-flex align-items-center justify-content-center">
+            <button type="submit" class="btn btn-primary w-15">
+              <!-- Conditional Spinner or Text -->
+              @if(isLoading == true) {
+                <i class="fas fa-spinner fa-spin"></i>
+              } @else {
+                <span>Submit</span>
+              }
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-dark text-white custom-navbar">
+  <div class="container-fluid">
+    <img src="https://cdn.prod.website-files.com/6267f35934aa8b1795cf1a9f/62f53a0ab5f151fbbb1ec6b2_about3-p-500.jpg" class="img-fluid w-3 rounded" alt="logo"/>
+    <h5 class="navbar-brand" class="ms-2 fw-bold pt-1">BookFiezta</h5>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto d-inline-flex nav-list">
+        <li class="nav-item d-inline pt-2">
+          <a class="nav-link active" aria-current="page" href="/home/#loggeduser-home">Home</a>
+        </li>
+        <li class="nav-item d-inline pt-2">
+          <a class="nav-link" href="/home/#books">Books</a>
+        </li>
+        <li class="nav-item d-inline pt-2">
+          <a class="nav-link" href="/home/#feedback">Feedback</a>
+        </li>
+        <li class="nav-item d-inline ms-2 pt-2 cursor-pointer">
+          <a [href]='profileLink' class="color-white"><i class="fas fa-user"></i></a>
+        </li>
+        <li class="nav-item d-inline ms-4 pt-2 cursor-pointer">
+          <a [href]='cartLink' class="color-white"><i class="fas fa-shopping-cart"></i></a>
+        </li>
+        <li class="nav-item d-inline ms-4 pt-2 cursor-pointer">
+          <i class="fas fa-sign-out-alt" (click)="logout()"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+

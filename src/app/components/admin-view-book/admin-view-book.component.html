@@ -1,0 +1,198 @@
+<div class="container-fluid vh-100 mt-2">
+  <div class="row gap-2 mx-auto d-flex align-items-center justify-content-center">
+    <div class="col-md-7">
+      <div class="card mt-2 mx-auto mb-3">
+        <div class="card-header border-0 bg-white">
+          <div class="card-title">
+            <h3 class="text-center">Book Details</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          @if(imageLink && !uploadedImage) {
+            <img [src]="imageLink" alt="user-image" class="card-img-top w-15 d-flex justify-content-center align-items-center mx-auto rounded-bottom"/>
+          } @else if (uploadedImage) {
+            <img [src]="uploadedImage" alt="user-image" class="card-img-top w-15 d-flex justify-content-center align-items-center mx-auto rounded-bottom"/>
+          }
+          @else {
+            <img src="https://www.shareicon.net/data/128x128/2017/03/02/880210_images_512x512.png" alt="user-image" class="card-img-top w-15 d-flex justify-content-center align-items-center mx-auto rounded-bottom"/>
+          }
+          @if(editButtonClicked == true) {
+            <form>
+              <div class="form-group">
+                <label for="imageUpload" class="d-flex justify-content-center mx-auto w-25 btn btn-primary mt-2">Upload Image</label>
+                <input type="file" id="imageUpload" accept="image/*" (change)="onFileChange($event)" style="display: none;">
+              </div>
+              <!-- Display uploaded image name -->
+              @if(uploadedImage) {
+                <div class="mt-2 text-center">
+                  <p><strong>Uploaded Book Image Name: </strong>{{ uploadedImageName }}</p>
+                </div>
+              }
+              <div class="form-group">
+                <label for="name" class="mb-1">Book Name:</label>
+                <input type="text" class="form-control mb-1" id="name" required [(ngModel)]="bookName" name="userName">
+              </div>
+              <div class="form-group">
+                <label for="author" class="mb-1">Book Author:</label>
+                <input type="text" class="form-control mb-1" id="auther" required [(ngModel)]="bookAuthor" name="userEmail">
+              </div>
+              <div class="form-group">
+                <label for="publishers" class="mb-1">Book Publishers:</label>
+                <input type="text" class="form-control mb-1" id="publishers" required [(ngModel)]="bookPublishers" name="bookPublishers" required>
+              </div>
+              <div class="form-group">
+                <label for="published-year" class="mb-1">Published Year:</label>
+                <input type="text" class="form-control mb-1" id="published-year" required [(ngModel)]="publishedYear" name="publishedYear" required>
+              </div>
+              <div class="form-group">
+                <label for="description" class="mb-1">Book Description:</label>
+                <textarea type="text" class="form-control mb-1" id="description" required [(ngModel)]="bookDescription" name="bookDescription"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="price" class="mb-1">Book Price:</label>
+                <input type="text" class="form-control mb-1" id="price" required [(ngModel)]="bookPrice" name="bookPrice">
+              </div>
+              <div class="form-group">
+                <label for="genre" class="mb-1">Book Genre</label>
+                <select [(ngModel)]="bookGenre" class="form-select" name="genre" required>
+                  <option value="" disabled selected>Select a Genre</option>
+                  <option value="Novel">Novel</option>
+                  <option value="Fiction">Fiction</option>
+                  <option value="Ditective">Ditective</option>
+                  <option value="Fantasy">Fantasy</option>
+                  <option value="Science Fiction">Science Fiction</option>
+                  <option value="Horror">Horror</option>
+                  <option value="Mystery">Mystery</option>
+                  <option value="Thriller">Thriller</option>
+                  <option value="Romance">Romance</option>
+                  <option value="Adventure">Adventure</option>
+                  <option value="Dystopian">Dystopian</option>
+                  <option value="Crime">Crime</option>
+                  <option value="Self Help">True Story</option>
+                  <option value="Political">Political</option>
+                  <option value="History">History</option>
+                  <option value="Biography">Biography</option>
+                  <option value="Autobiography">Autobiography</option>
+                  <option value="Science">Science</option>
+                  <option value="Math">Math</option>
+                  <option value="Programming">Programming</option>
+                  <option value="Technology">Technology</option>
+                  <option value="Engineering">Engineering</option>
+                  <option value="Medicine">Medicine</option>
+                  <option value="Art">Art</option>
+                  <option value="Literature">Literature</option>
+                  <option value="Philosophy">Philosophy</option>
+                  <option value="Religion">Religion</option>
+                  <option value="Music">Music</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Finance">Finance</option>
+                  <option value="Business">Business</option>
+                  <option value="Economics">Economics</option>
+                  <option value="Marketing">Marketing</option>
+                  <option value="Management">Management</option>
+                  <option value="Entrepreneurship">Entrepreneurship</option>
+                  <option value="Leadership">Leadership</option>
+                  <option value="Communication">Communication</option>
+                  <option value="Social-skills">Social Skills</option>
+                  <option value="Psychology">Psychology</option>
+                  <option value="Health">Health</option>
+                  <option value="Fitness">Fitness</option>
+                  <option value="Nutrition">Nutrition</option>
+                  <option value="Cooking">Cooking</option>
+                  <option value="Crafts">Crafts</option>
+                  <option value="Home">Home</option>
+                  <option value="Personal Development">Personal Development</option>
+                  <option value="Parenting">Parenting</option>
+                  <option value="Family">Family</option>
+                  <option value="Relationships">Relationships</option>
+                  <option value="Education">Education</option>
+                  <option value="Teaching">Teaching</option>
+                  <option value="Language">Language</option>
+                  <option value="Travel">Travel</option>
+                  <option value="Guides">Guides</option>
+                  <option value="Dictionary">Dictionary</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="created-date" class="mb-1">Book Created Date:</label>
+                <input type="text" class="form-control mb-1" id="created-date" required [(ngModel)]="bookCreatedDate" name="bookCreatedDate" disabled>
+              </div>
+              <div class="d-flex align-items-center justify-content-center">
+                <button type="submit" class="btn btn-info w-20 mt-2 text-white" (click)="updateBook()">
+                  <!-- Conditional Spinner or Text -->
+                  @if(isLoading == true) {
+                    <i class="fas fa-spinner fa-spin"></i>
+                  } @else {
+                    <span>Update Book</span>
+                  }
+                </button>
+                <button type="submit" class="btn btn-danger w-20 mt-2 ms-2" (click)="cancelUpdate()">
+                  <!-- Conditional Spinner or Text -->
+                  @if(isLoading == true) {
+                    <i class="fas fa-spinner fa-spin"></i>
+                  } @else {
+                    <span>Cancel</span>
+                  }
+                </button>
+              </div>
+            </form>
+          } @else {
+            <h5 class="text-center mt-3">Book Name: {{bookName}}</h5>
+            <h5 class="text-center mt-3">Book Author: {{bookAuthor}}</h5>
+            <h5 class="text-center mt-3">Book Publishers: {{bookPublishers}}</h5>
+            <h5 class="text-center mt-3">Book Published Year: {{publishedYear}}</h5>
+            <h5 class="text-center mt-3">Book Description:
+              <h6 class="mt-1">"{{bookDescription}}"</h6>
+            </h5>
+            <h5 class="text-center mt-3">Book Added Date: {{bookCreatedDate}}</h5>
+            <h5 class="text-center mt-3">Book Genre: {{bookGenre}}</h5>
+            <h5 class="text-center mt-3">Book Price: {{bookPrice}}</h5>
+            <h5 class="text-center mt-3">Sells: {{sells}}</h5>
+            <h5 class="text-center mt-3">Ratings: {{ratings}}</h5>
+            <div class="justify-content-center d-flex gap-3">
+              @if(viewedBook == null || viewedBook == "" || viewedBook == undefined) {
+                <button class="btn btn-primary w-20 mt-2 d-flex justify-content-center align-items-center" (click)="editBook()" disabled>Edit Book</button>
+                <button class="btn btn-warning text-white w-20 mt-2 d-flex justify-content-center align-items-center" (click)="deleteBook()">Remove Book</button>
+                <button class="btn btn-danger w-20 mt-2 d-flex justify-content-center align-items-center" (click)="backToHome()" disabled>Back to Home</button>
+              } @else {
+                <button class="btn btn-primary w-20 mt-2 d-flex justify-content-center align-items-center" (click)="editBook()">Edit Book</button>
+                <button class="btn btn-warning text-white w-20 mt-2 d-flex justify-content-center align-items-center" (click)="deleteBook()">Remove Book</button>
+                <button class="btn btn-danger w-20 mt-2 d-flex justify-content-center align-items-center" (click)="backToHome()">Back to Home</button>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header border-0 bg-white">
+          <h3 class="text-center">Reviews</h3>
+        </div>
+        <div class="card-body">
+          @if(reviews.length > 0) {
+            <div class="card mb-2 border-0 rounded-bottom" *ngFor="let review of reviews; let i = index; trackBy: trackByFn">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-5 text-start">
+                    <h6>{{review.userName}}</h6>
+                  </div>
+                  <div class="col-7 text-end">
+                    <h6>at {{review.reviewAddedDate}}</h6>
+                  </div>
+                </div>
+                <div class="card-body border-0 rounded-bottom">
+                  <textarea type="review-message" class="form-control mb-1" id="review-message" disabled>{{review.reviewBody}}</textarea>
+                </div>
+              </div>
+            </div>
+          } @else {
+            <h5 class="text-center">No Reviews Found</h5>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

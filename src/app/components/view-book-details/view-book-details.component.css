@@ -1,0 +1,24 @@
+.img-size {
+  width: 200px;
+  height: 180px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.w-20 {
+  width: 20% !important;
+}
+
+.w-30 {
+  width: 30% !important;
+}
+
+.w-60 {
+  width: 60% !important;
+}
+
+.w-40 {
+  width: 40% !important;
+}

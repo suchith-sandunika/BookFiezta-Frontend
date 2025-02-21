@@ -1,0 +1,59 @@
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+  <div class="card mt-2 w-50 mx-auto">
+    <div class="card-header border-0 bg-white">
+      <div class="card-title">
+        <h3 class="text-center">User Profile</h3>
+      </div>
+    </div>
+    <div class="card-body">
+      @if(imageLink) {
+        <img [src]="imageLink" alt="user-image" class="card-img-top w-15 d-flex justify-content-center align-items-center mx-auto rounded-bottom"/>
+      } @else {
+        <img src="https://www.citypng.com/public/uploads/preview/white-user-member-guest-icon-png-image-701751695037005zdurfaim0y.png" alt="user-image" class="card-img-top w-15 d-flex justify-content-center align-items-center mx-auto rounded-bottom"/>
+      }
+        <h5 class="text-center mt-3">User Name:{{userName}}</h5>
+        <h5 class="text-center mt-3">User Email: {{userEmail}}</h5>
+        <h5 class="text-center mt-3">Joined Date: {{joinedDate}}</h5>
+        <h5 class="text-center mt-3">Books Purchased:
+          @if(purchasedBooks.length > 0) {
+            <div class="card card-body mt-2 mb-2 border-0">
+              <ul>
+                @for(index of purchasedBooks; track index; let i = $index) {
+                  <li>{{purchasedBooks[index]}}</li>
+                }
+              </ul>
+            </div>
+          } @else {
+            <div class="card card-body mt-2 mb-2 border-0">
+              <span class="text-danger">No Books Purchased!</span>
+            </div>
+          }
+        </h5>
+        <h5 class="text-center mt-3">User Cart:
+          @if(cart.length > 0) {
+            <div class="card card-body mt-2 mb-2 border-0">
+              <ul>
+                @for(index of cart; track index; let i = $index) {
+                  <li>{{cart[index]}}</li>
+                }
+              </ul>
+            </div>
+          } @else {
+            <div class="card card-body mt-2 mb-2 border-0">
+              <span class="text-danger">Cart is Empty!</span>
+            </div>
+          }
+        </h5>
+        <div class="justify-content-center d-flex gap-3">
+          @if(userName == null || userName == "" || userName == undefined) {
+            <button class="btn btn-warning text-white w-20 mt-2 d-flex justify-content-center align-items-center" disabled>Remove User</button>
+            <button class="btn btn-danger w-20 mt-2 d-flex justify-content-center align-items-center" disabled>Back to Home</button>
+          } @else {
+            <button class="btn btn-warning text-white w-20 mt-2 d-flex justify-content-center align-items-center" (click)="deleteUser()">Remove User</button>
+            <button class="btn btn-danger w-20 mt-2 d-flex justify-content-center align-items-center" (click)="moveToHome()">Back to Home</button>
+          }
+        </div>
+    </div>
+  </div>
+</div>
+

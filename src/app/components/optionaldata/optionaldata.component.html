@@ -1,0 +1,50 @@
+<div class="container mt-5 pt-4 mx-auto my-auto">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-header border-0 bg-white mt-2">
+          <h3 class="text-center">Enter some additional information about you</h3>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <label for="date" class="mb-2">Date of Birth</label>
+              <input type="date" class="form-control mb-2" id="date" placeholder="DD/MM/YY" [(ngModel)]="dateofBirth" name="dateOfBirth" (change)="handleAge()">
+            </div>
+            <div class="form-group">
+              <label for="age" class="mb-2">Age</label>
+              <input type="text" class="form-control mb-2" id="age" [(ngModel)]="userAge" name="userAge" disabled>
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber" class="mb-2">Password</label>
+              <div class="d-flex justify-content-center align-items-center gap-2 mx-auto">
+                <input type="text" class="form-control mb-2 w-25" id="areaCode" placeholder="Area Code"  [(ngModel)]="userPhoneNumberAreaCode" name="userPhoneNumberAreaCode">
+                <input type="text" class="form-control mb-2 w-75" id="phoneNumber" placeholder="Enter Phone Number"  [(ngModel)]="userPhoneNumber" name="userPhoneNumber">
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-center gap-2 mx-auto">
+              <button type="submit" class="btn btn-primary w-20" (click)="skipOperation()">
+                <!-- Conditional Spinner or Text -->
+                @if(isLoading == true) {
+                  <i class="fas fa-spinner fa-spin"></i>
+                } @else {
+                  <span>Skip</span>
+                }
+              </button>
+              <button type="submit" class="btn btn-primary w-20" (click)="confimData()">
+                <!-- Conditional Spinner or Text -->
+                @if(isLoading == true) {
+                  <i class="fas fa-spinner fa-spin"></i>
+                } @else {
+                  <span>Confirm</span>
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
