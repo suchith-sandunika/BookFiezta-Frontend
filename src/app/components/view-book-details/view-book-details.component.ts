@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import axios from 'axios';
+import {SessionService} from '../../services/session/session.service';
 
 @Component({
   selector: 'app-view-book-details',
@@ -13,7 +14,7 @@ import axios from 'axios';
 })
 
 export class ViewBookDetailsComponent implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute, private sessionService: SessionService) {}
 
   imageLink: string = '';
   bookName: string = '';

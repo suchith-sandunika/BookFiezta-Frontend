@@ -7,6 +7,7 @@ import { LoggedUserHomeComponent } from "../../components/logged-user-home/logge
 import { FeedbackComponent } from '../../components/feedback/feedback.component';
 import axios from 'axios';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SessionService} from '../../services/session/session.service';
 
 @Component({
   selector: 'app-logged-user-homepage',
@@ -20,7 +21,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class LoggedUserHomepageComponent implements AfterViewInit {
   loggedUserEmail: string = '';
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router, private sessionService: SessionService) { }
 
   ngAfterViewInit() {
     this.route.fragment.subscribe(fragment => {

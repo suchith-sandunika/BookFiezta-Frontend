@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import axios from 'axios';
 import {NgForOf, NgIf} from '@angular/common';
+import {SessionService} from '../../services/session/session.service';
 
 @Component({
   selector: 'app-cart',
@@ -24,7 +25,7 @@ export class CartComponent implements OnInit {
   currencyAmount: number = 0;
   totalBalance: string = '0.00';
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute, private sessionService: SessionService) {}
 
   async ngOnInit(): Promise<void> {
     const name = this.route.snapshot.paramMap.get('name');

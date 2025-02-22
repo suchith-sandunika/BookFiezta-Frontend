@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import axios from 'axios';
 import {NgForOf} from '@angular/common';
+import {SessionService} from '../../services/session/session.service';
 
 @Component({
   selector: 'app-profile',
@@ -32,7 +33,7 @@ export class ProfileComponent {
 
   editButtonClicked: boolean = false;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute, private sessionService: SessionService) {}
 
   async ngOnInit() : Promise<void> {
     const name = this.route.snapshot.paramMap.get('name');

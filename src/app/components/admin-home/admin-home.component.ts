@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
   standalone: true,
   styleUrl: './admin-home.component.css'
 })
+
 export class AdminHomeComponent {
 
 }
