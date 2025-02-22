@@ -154,7 +154,7 @@ export class OptionaldataComponent {
         if(sendMobileOTPResponse.status == 200) {
           alert('User Data Updated. An OTP has been sent to verify your phone number');
           this.userService.setUserPhoneNumber(this.fullPhoneNumber);
-          await this.router.navigate(['verify-mobiile']);
+          await this.router.navigate(['verify-mobile']);
           return;
         } else {
           console.log('Error Occurred While Sending OTP');

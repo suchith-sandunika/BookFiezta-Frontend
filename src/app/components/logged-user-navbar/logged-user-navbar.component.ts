@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import axios from 'axios';
 import { UserService } from '../../services/user/user.service';
 import { Router } from '@angular/router';
+import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-logged-user-navbar',
@@ -20,7 +21,7 @@ export class LoggedUserNavbarComponent implements OnInit {
 
   @Input() data!: string; // Should receive the loggedUserEmail ...
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   async ngOnInit(): Promise<void> {
     //console.log(`Logged user: ${this.data}`); // Log the logged user's email for testing purposes
@@ -80,7 +81,8 @@ export class LoggedUserNavbarComponent implements OnInit {
       console.log(logoutResponse);
       if(logoutResponse.status == 200) {
         alert('Successfully Logout from the System');
-        this.router.navigate(['login']);
+        this.authService.logoutAuth();
+        await this.router.navigate(['login']);
       } else {
         console.log('Something went wrong with logout');
         return;

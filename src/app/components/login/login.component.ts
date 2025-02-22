@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import axios from 'axios';
 import {FormsModule} from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
+import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { UserService } from '../../services/user/user.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(private router: Router, private userService: UserService, private authService: AuthService) {}
 
   userEmail: string = '';
   userPassword: string = '';
@@ -33,8 +34,9 @@ export class LoginComponent {
       if(loginResponse.status == 200) {
         this.isLoading = false;
         alert('Login Successfull');
-        this.userService.setUserEmail(this.userEmail);  // Save user data in the service
-        this.router.navigate(['home']);
+        this.userService.setUserEmail(this.userEmail);  // Save user data in the service ...
+        this.authService.loginAuth();
+        await this.router.navigate(['/home']);
       } else {
         this.isLoading = false;
         alert('Login Failed. Please Check the data you entered.')

@@ -21,6 +21,18 @@ export class RegisterComponent {
 
   constructor(private router: Router, private userService: UserService) {}
 
+  checkPasswordStrength(): boolean {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;
+    const result = passwordRegex.test(this.userPassword);
+    return result;
+  }
+
+  checkEmailFormat(): boolean {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const result = emailRegex.test(this.userEmail);
+    return result;
+  }
+
   async register() {
     this.isLoading = true;
     // Check whether the data is empty ...
@@ -30,8 +42,8 @@ export class RegisterComponent {
       return;
     }
 
-    if(this.userPassword.length < 4 && this.userPassword.length > 10) {
-      alert('Password must be between 4 and 10 characters');
+    if(this.userPassword.length <= 8 && this.userPassword.length > 15) {
+      alert('Password must be between 8 and 15 characters');
       this.isLoading = false;
       return;
     }
@@ -42,8 +54,20 @@ export class RegisterComponent {
       return;
     }
 
+    if(!this.checkEmailFormat()) {
+      alert('Wrong Email Format');
+      this.isLoading = false;
+      return;
+    }
+
+    if(!this.checkPasswordStrength()) {
+      alert('Password must contain numbers, symbols and letters');
+      this.isLoading = false;
+      return;
+    }
+
     try {
-      // Call the API to register the user ...
+      // Call the API End Point to register the user ...
       const response = await axios.post('http://localhost:8000/api/auth/register', {name: this.userName, email: this.userEmail, password: this.userPassword});
       console.log(response);
       if(response.status !== 201) {
@@ -61,8 +85,8 @@ export class RegisterComponent {
           console.log(response.data);
           this.userService.setUserDetails(this.userEmail, this.userName);
           this.isLoading = false;
-          alert('Email Verfication OTP has been sent to your email. Please validate your Email before registration');
-          this.router.navigate(['verify-email']);
+          alert('Email Verification OTP has been sent to your email. Please validate your Email before registration');
+          await this.router.navigate(['verify-email']);
         }
       }
     } catch (error : any) {

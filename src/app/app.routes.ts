@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
@@ -7,17 +8,20 @@ import { EmailVerificationResetPasswordComponent } from './components/email-veri
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { LoggedUserHomepageComponent } from './pages/logged-user-homepage/logged-user-homepage.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { CartComponent } from './components/cart/cart.component';
+import { ViewBookDetailsComponent } from './components/view-book-details/view-book-details.component';
+import {OptionaldataComponent} from './components/optionaldata/optionaldata.component';
+import {MobileVerificationComponent} from './components/mobile-verification/mobile-verification.component';
 
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminResetPasswordComponent } from './components/admin-reset-password/admin-reset-password.component';
 import { AdminUserHomepageComponent } from './pages/admin-user-homepage/admin-user-homepage.component';
-import { CartComponent } from './components/cart/cart.component';
 import { AdminViewEmployeeComponent } from './components/admin-view-employee/admin-view-employee.component';
 import { AdminAddBookComponent } from './components/admin-add-book/admin-add-book.component';
 import { AdminViewBookComponent } from './components/admin-view-book/admin-view-book.component';
-import { ViewBookDetailsComponent } from './components/view-book-details/view-book-details.component';
-import {OptionaldataComponent} from './components/optionaldata/optionaldata.component';
-import {MobileVerificationComponent} from './components/mobile-verification/mobile-verification.component';
+
+
+import {AuthGuard} from './guard/auth.guard';
 
 export const routes: Routes = [
 
@@ -29,13 +33,12 @@ export const routes: Routes = [
   {path: 'enter-email-reset-password', component: EmailVerificationResetPasswordComponent},
   {path: 'verify-email', component: EmailVerificationComponent},
   {path: 'optional-data-add', component: OptionaldataComponent},
-  {path: 'verify-mobiile', component: MobileVerificationComponent},
-  {path: 'home', component: LoggedUserHomepageComponent},
+  {path: 'verify-mobile', component: MobileVerificationComponent},
+  {path: 'home', component: LoggedUserHomepageComponent, canActivate: [AuthGuard]},
   {path: 'verify-email-reset-password', component: EmailVerificationResetPasswordComponent},
-  {path: 'profile/:name', component: ProfileComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'cart/:name', component: CartComponent},
-  {path: 'book-details/:name', component: ViewBookDetailsComponent},
+  {path: 'profile/:name', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'cart/:name', component: CartComponent, canActivate: [AuthGuard]},
+  {path: 'book-details/:name', component: ViewBookDetailsComponent, canActivate: [AuthGuard]},
 
   // Admin Routes ...
   {path: 'admin-login', component: AdminLoginComponent},
