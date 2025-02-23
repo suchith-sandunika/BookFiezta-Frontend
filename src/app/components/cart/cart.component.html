@@ -21,7 +21,7 @@
                       <div class="row align-items-center g-3">
                         <!-- Checkbox Column -->
                         <div class="col-2 col-sm-1 text-center">
-                          <input type="checkbox" name="cart" value="item._id" class="mt-2" (change)="onCheckboxChange($event, item._id, item.price)">
+                          <input type="checkbox" name="cart" value="item._id" class="mt-2" (change)="onCheckboxChange($event, item._id, item.price, item.name)">
                         </div>
                         <!-- Image Column -->
                         <div class="col-4 col-sm-3 text-center">
@@ -76,9 +76,9 @@
             <h3 class="text-center fw-bold mb-3">{{currencyUnit}} {{totalBalance}}</h3>
             <div class="row gap-2 mx-auto align-items-center d-flex justify-content-center">
               @if (totalBalance != '0.00') {
-                <button class="btn btn-primary w-22" (click)="pay(totalBalance)">Pay</button>
+                <button class="btn btn-primary w-22" (click)="pay()">Pay</button>
               } @else {
-                <button class="btn btn-primary w-22" (click)="pay(totalBalance)" disabled>Pay</button>
+                <button class="btn btn-primary w-22" (click)="pay()" disabled>Pay</button>
               }
               <button class="btn btn-danger w-30" (click)="backToHome()">Go Back to Homepage</button>
             </div>

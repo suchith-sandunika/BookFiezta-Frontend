@@ -24,6 +24,7 @@ export class CartComponent implements OnInit {
   currencyUnit: string = 'USD';
   currencyAmount: number = 0;
   totalBalance: string = '0.00';
+  purchasingItems: Array<any> = [];
 
   constructor(private router: Router, private route: ActivatedRoute, private sessionService: SessionService) {}
 
@@ -79,26 +80,52 @@ export class CartComponent implements OnInit {
     }
   }
 
-  onCheckboxChange(event: any, id: string, price: string) {
+  onCheckboxChange(event: any, id: string, price: string, name: string) {
     const priceValue = price.split(" ");
     console.log(priceValue);
     this.currencyUnit = priceValue[0];
     this.currencyAmount = parseFloat(priceValue[1]);
+    const priceValueWithoutDecimals = priceValue[1].split(".");
+    console.log('Original Price Value : ', priceValueWithoutDecimals);
     console.log(this.currencyUnit, this.currencyAmount);
     if(event.target.checked) {
       this.total = this.total + this.currencyAmount;
       this.totalBalance = this.total.toFixed(2);
       console.log(this.totalBalance);
+      this.purchasingItems.push({ "id": id, "name": name, "priceValue": parseInt(priceValueWithoutDecimals[0]) });
+      console.log(this.purchasingItems);
     } else {
       this.total = this.total - this.currencyAmount;
       this.totalBalance = this.total.toFixed(2);
       console.log(this.totalBalance);
+      this.purchasingItems = this.purchasingItems.filter(item => item.id !== id);
+      console.log(this.purchasingItems);
     }
   }
 
-  pay(amount: string): any {
-    alert('payment is in process');
-    console.log(amount);
+  async pay(): Promise<any> {
+    try {
+      const createOrderResponse = await axios.post('http://localhost:8000/api/user/create-order', { items: this.purchasingItems, userId: this.userId });
+      console.log(createOrderResponse);
+      if(createOrderResponse.status == 201) {
+        console.log('Order Created');
+        const orderId = createOrderResponse.data._id;
+        const paymentResponse = await axios.post('http://localhost:8000/api/cart/pay', { items: this.purchasingItems });
+        console.log(paymentResponse);
+        if(paymentResponse.status == 200) {
+          window.location.href = paymentResponse.data.url;
+        } else {
+          alert('Payment Failed');
+          return;
+        }
+      } else {
+        alert('Order Failed');
+        return;
+      }
+    } catch (error: any) {
+      console.log('Error Occurred', error);
+      return;
+    }
   }
 
   trackByIndex(index: number, item: any): number {
