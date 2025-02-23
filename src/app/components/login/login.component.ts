@@ -4,6 +4,7 @@ import axios from 'axios';
 import {FormsModule} from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
 import {AuthService} from '../../services/auth/auth.service';
+import {AlertService} from '../../services/alert/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import {AuthService} from '../../services/auth/auth.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor(private router: Router, private userService: UserService, private authService: AuthService) {}
+  constructor(private router: Router, private userService: UserService, private authService: AuthService, private alertService: AlertService) {}
 
   userEmail: string = '';
   userPassword: string = '';
@@ -33,9 +34,11 @@ export class LoginComponent {
       console.log(loginResponse);
       if(loginResponse.status == 200) {
         this.isLoading = false;
-        alert('Login Successfull');
         this.userService.setUserEmail(this.userEmail);  // Save user data in the service ...
         this.authService.loginAuth();
+        alert('Login Successfull');
+        //this.alertService.showMessage('Login Successful!', 'success');
+        localStorage.setItem('token', loginResponse.data.token);
         await this.router.navigate(['/home']);
       } else {
         this.isLoading = false;

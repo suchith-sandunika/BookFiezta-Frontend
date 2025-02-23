@@ -110,7 +110,8 @@ export class ProfileComponent {
         alert('Profile updated successfully');
         this.uploadedImage = null;
         this.uploadedImageName = null;
-        await this.router.navigate([`/profile/${this.userName}`]);
+        //await this.router.navigate([`/profile/${this.userName}`]);
+        window.location.reload();
       } else {
         this.isLoading = false;
         alert('Error updating profile');

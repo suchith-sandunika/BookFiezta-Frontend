@@ -21,6 +21,8 @@ export class BooksComponent implements OnInit {
   latestBooks: Array<any> = [];
   redirectLink: string = '';
 
+  token: string | null = localStorage.getItem('token');
+
   async ngOnInit(): Promise<any> {
     await this.fecthAllBooks();
     await this.fetchLatestBooks();
@@ -28,14 +30,19 @@ export class BooksComponent implements OnInit {
 
   async fecthAllBooks(): Promise<any> {
     try {
-      const booksResponse = await axios.get('http://localhost:8000/api/books');
-      if(booksResponse.status === 200) {
-        this.booksFound = true;
-        this.allBooks = booksResponse.data.data;
-        console.log(this.allBooks);
+      if(this.token) {
+        console.log(this.token);
+        const booksResponse = await axios.get('http://localhost:8000/api/books', {headers: {'Authorization': `Bearer ${this.token}`}});
+        if(booksResponse.status === 200) {
+          this.booksFound = true;
+          this.allBooks = booksResponse.data.data;
+          console.log(this.allBooks);
+        } else {
+          this.booksFound = false;
+          console.error('Failed to fetch books');
+        }
       } else {
-        this.booksFound = false;
-        console.error('Failed to fetch books');
+        alert('Authentication Error!!');
       }
     } catch (error) {
       console.error('Error', error);

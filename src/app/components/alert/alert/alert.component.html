@@ -1,0 +1,30 @@
+<div *ngIf="showToast && title == 'success'" class="toast show position-fixed top-0 end-0 p-3" style="z-index: 1050;" role="alert">
+  <div class="toast-header bg-success text-white">
+    <strong class="me-auto">Success</strong>
+    <button type="button" class="btn-close" (click)="showToast = false"></button>
+  </div>
+  <div class="toast-body">
+    {{ message }}
+  </div>
+</div>
+
+<div *ngIf="showToast && title == 'error'" class="toast show position-fixed top-0 end-0 p-3" style="z-index: 1050;" role="alert">
+  <div class="toast-header bg-success text-white">
+    <strong class="me-auto">Error</strong>
+    <button type="button" class="btn-close" (click)="showToast = false"></button>
+  </div>
+  <div class="toast-body">
+    {{ message }}
+  </div>
+</div>
+
+<div *ngIf="showToast && title == 'warning'" class="toast show position-fixed top-0 end-0 p-3" style="z-index: 1050;" role="alert">
+  <div class="toast-header bg-success text-white">
+    <strong class="me-auto">Warning</strong>
+    <button type="button" class="btn-close" (click)="showToast = false"></button>
+  </div>
+  <div class="toast-body">
+    {{ message }}
+  </div>
+</div>
+

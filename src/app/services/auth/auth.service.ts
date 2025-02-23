@@ -11,6 +11,11 @@ export class AuthService {
     localStorage.setItem('token', 'user-authenticated');
   }
 
+  // The localStorage.setItem method stores data in the browser's localStorage. Specifically, this function saves a key-value pair:
+  //
+  // Key: "token"
+  // Value: "user-authenticated"
+
   logoutAuth(): void {
     localStorage.removeItem('token');
   }
