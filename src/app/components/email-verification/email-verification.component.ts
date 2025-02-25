@@ -63,7 +63,7 @@ export class EmailVerificationComponent {
         console.log(verifyNewlySentOTPResponse);
         if(verifyNewlySentOTPResponse.status == 200) {
           this.isLoading2 = false;
-          alert('User Registration Successfull');
+          alert('Email Verified Successfully');
           await this.router.navigate(['login']); // Redirect to login page if successful registration
         } else {
           this.isLoading2 = false;

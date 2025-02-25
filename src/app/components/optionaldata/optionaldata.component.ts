@@ -113,22 +113,13 @@ export class OptionaldataComponent {
   }
 
   async confimData(): Promise<any> {
-    if(this.dateofBirth == new Date("")) {
-      alert('Please enter the Date of Birth');
-      return;
-    }
 
-    if(this.userAge.length == 0) {
-      alert('There is an issue with age. Please check the Date of Birth you entered');
-      return;
-    }
-
-    if(this.userPhoneNumberAreaCode.length == 0) {
+    if(this.userPhoneNumber.length !== 0 && this.userPhoneNumberAreaCode.length == 0) {
       alert('Please enter the Phone Number Area Code');
       return;
     }
 
-    if(this.userPhoneNumber.length == 0) {
+    if(this.userPhoneNumber.length == 0 && this.userPhoneNumberAreaCode.length !== 0) {
       alert('Please enter the Phone Number');
       return;
     }

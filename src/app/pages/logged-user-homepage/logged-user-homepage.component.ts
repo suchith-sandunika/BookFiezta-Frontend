@@ -20,6 +20,9 @@ import {SessionService} from '../../services/session/session.service';
 
 export class LoggedUserHomepageComponent implements AfterViewInit {
   loggedUserEmail: string = '';
+  status: string | null = '';
+  orderId: string | null = '';
+  token: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router, private sessionService: SessionService) { }
 
@@ -43,6 +46,39 @@ export class LoggedUserHomepageComponent implements AfterViewInit {
     // this.route.queryParams.subscribe(params => {
     //   this.scrollToSection(params['section']);
     // });
+    console.log(this.router.url);
+    if(this.router.url.includes('status') && this.router.url.includes('orderId') && this.router.url.includes('token')) {
+      this.route.queryParams.subscribe(async params => {
+        // Extract token and PayerID normally
+        this.token = params['token'] || null;
+
+        // Decode and fix the incorrect encoding of status and orderId
+        let rawStatus = params['status']; // paid%3ForderId%3Dundefined
+        if (rawStatus) {
+          let decodedStatus = decodeURIComponent(rawStatus); // "paid?orderId=undefined"
+          let statusParts = decodedStatus.split('?orderId=');
+
+          this.status = statusParts[0] || null; // Extract "paid"
+          this.orderId = statusParts[1] !== 'undefined' ? statusParts[1] : null; // Extract orderId
+        }
+
+        console.log('Status:', this.status);
+        console.log('Order ID:', this.orderId);
+        console.log('Token:', this.token);
+
+        if (this.orderId != null || this.status != null || this.token != null) {
+          if (this.status == 'paid') {
+            await this.completePaymentInfo(this.orderId)
+          } else {
+            return;
+          }
+        } else {
+          return;
+        }
+      });
+    } else {
+      return;
+    }
   }
 
   // ngAfterViewInit() {
@@ -83,6 +119,31 @@ export class LoggedUserHomepageComponent implements AfterViewInit {
     } catch (error: any) {
       console.error('Error:', error.message);
       return 'error';
+    }
+  }
+
+  async completePaymentInfo(id: string | null): Promise<any> {
+    try {
+      const completeOrderResponse = await axios.post('http://localhost:8000/api/user/complete-order', { orderId: id, date: new Date(), token: this.token });
+      console.log(completeOrderResponse);
+      if(completeOrderResponse.status == 200) {
+        const updatePurchasedItemResponse = await axios.post('http://localhost:8000/api/user/update-purchased-item', { orderId: id });
+        console.log(updatePurchasedItemResponse);
+        if(updatePurchasedItemResponse.status == 200) {
+          alert('Payment Successfull');
+          console.log('Payment Successfull');
+          return;
+        } else {
+          alert('Payment Failed');
+          return;
+        }
+      } else {
+        alert('Error Occurred During the Payment. Try Again');
+        return;
+      }
+    } catch (error: any) {
+      console.error('Error:', error.message);
+      return;
     }
   }
 }

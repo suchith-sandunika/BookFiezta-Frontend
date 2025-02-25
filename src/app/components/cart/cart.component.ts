@@ -25,6 +25,7 @@ export class CartComponent implements OnInit {
   currencyAmount: number = 0;
   totalBalance: string = '0.00';
   purchasingItems: Array<any> = [];
+  disableRemoveButton: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private sessionService: SessionService) {}
 
@@ -71,11 +72,11 @@ export class CartComponent implements OnInit {
         this.cartItems.splice(index, 1);
         console.log(this.cartItems);
       } else {
-        console.log('An error occured while removing the book from the cart');
+        console.log('An error occurred while removing the book from the cart');
         return;
       }
     } catch (error) {
-      console.log('Error Occured while removing book from the cart', error);
+      console.log('Error Occurred while removing book from the cart', error);
       return;
     }
   }
@@ -89,12 +90,14 @@ export class CartComponent implements OnInit {
     console.log('Original Price Value : ', priceValueWithoutDecimals);
     console.log(this.currencyUnit, this.currencyAmount);
     if(event.target.checked) {
+      this.disableRemoveButton = true;
       this.total = this.total + this.currencyAmount;
       this.totalBalance = this.total.toFixed(2);
       console.log(this.totalBalance);
       this.purchasingItems.push({ "id": id, "name": name, "priceValue": parseInt(priceValueWithoutDecimals[0]) });
       console.log(this.purchasingItems);
     } else {
+      this.disableRemoveButton = false;
       this.total = this.total - this.currencyAmount;
       this.totalBalance = this.total.toFixed(2);
       console.log(this.totalBalance);
@@ -104,15 +107,18 @@ export class CartComponent implements OnInit {
   }
 
   async pay(): Promise<any> {
+    this.disableRemoveButton = false;
     try {
       const createOrderResponse = await axios.post('http://localhost:8000/api/user/create-order', { items: this.purchasingItems, userId: this.userId });
       console.log(createOrderResponse);
       if(createOrderResponse.status == 201) {
         console.log('Order Created');
-        const orderId = createOrderResponse.data._id;
-        const paymentResponse = await axios.post('http://localhost:8000/api/cart/pay', { items: this.purchasingItems });
+        const orderId = createOrderResponse.data.data._id;
+        console.log('orderId:',orderId);
+        const paymentResponse = await axios.post('http://localhost:8000/api/cart/pay', { items: this.purchasingItems, orderId: orderId });
         console.log(paymentResponse);
         if(paymentResponse.status == 200) {
+          console.log(paymentResponse.data.url);
           window.location.href = paymentResponse.data.url;
         } else {
           alert('Payment Failed');
