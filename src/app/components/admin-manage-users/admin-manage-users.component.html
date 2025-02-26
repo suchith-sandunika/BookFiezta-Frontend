@@ -1,5 +1,5 @@
 <div class="container-fluid p-1" id="users">
-  <div class="card backgound-img">
+  <div class="card backgound-img border-0">
     <div class="card-body">
       <div class="card-title">
         <h3 class="text-center">Users</h3>
@@ -17,7 +17,7 @@
       <div class="row">
         @if(usersFound) {
           <div class="col-md-2 mb-2" *ngFor="let user of users; let i = index; trackBy: trackByFn">
-            <div class="card cursor-pointer">
+            <div class="card cursor-pointer border-0">
               @if(user.image == null) {
                 <img src="https://www.citypng.com/public/uploads/preview/white-user-member-guest-icon-png-image-701751695037005zdurfaim0y.png" class="card-img-top img-size w-100" alt="User Image">
               } @else {

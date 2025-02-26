@@ -1,5 +1,5 @@
 <div class="container-fluid p-1" id="books">
-  <div class="card backgound-img">
+  <div class="card backgound-img border-0">
     <div class="card-body">
       <div class="card-title">
         <h3 class="text-center">Books</h3>
@@ -20,7 +20,7 @@
       <div class="row">
         @if(booksFound == true) {
           <div class="col-md-2 mb-2" *ngFor="let book of books; let i = index; trackBy: trackByFn">
-            <div class="card cursor-pointer">
+            <div class="card cursor-pointer border-0">
               @if(book.image.name == null) {
                 <img src="https://www.shareicon.net/data/128x128/2017/03/02/880210_images_512x512.png" class="card-img-top img-size w-100" alt="book Image">
               } @else {
@@ -39,7 +39,7 @@
             </div>
           </div>
         } @else {
-          <span class="text-center">No Books Found</span>
+          <span class="text-center">Oops! No Books Found</span>
         }
       </div>
     </div>

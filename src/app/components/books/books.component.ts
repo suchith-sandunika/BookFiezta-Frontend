@@ -19,13 +19,26 @@ export class BooksComponent implements OnInit {
   latestBooksFound: boolean = false;
   allBooks: Array<any> = [];
   latestBooks: Array<any> = [];
+  filteredBooks: Array<any> = [];
+  filteredLatestBooks: Array<any> = [];
   redirectLink: string = '';
+  searchInput1: string = '';
+  searchInput2: string = '';
 
   token: string | null = localStorage.getItem('token');
 
   async ngOnInit(): Promise<any> {
-    await this.fecthAllBooks();
-    await this.fetchLatestBooks();
+    if(this.searchInput1 == '') {
+      await this.fetchLatestBooks();
+    } else {
+      await this.filterLatestBooks();
+    }
+
+    if(this.searchInput2 == '') {
+      await this.fecthAllBooks();
+    } else {
+      await this.filterBooks();
+    }
   }
 
   async fecthAllBooks(): Promise<any> {
@@ -86,5 +99,39 @@ export class BooksComponent implements OnInit {
     event.preventDefault();
     this.redirectLink = `book-details/${name}`;
     this.router.navigate([this.redirectLink]);
+  }
+
+  async filterBooks(): Promise<void> {
+    this.filteredBooks = this.allBooks.filter(book =>
+      book.name.toLowerCase().includes(this.searchInput2.toLowerCase()) ||
+      book.auther.toLowerCase().includes(this.searchInput2.toLowerCase()) ||
+      book.publishers.toLowerCase().includes(this.searchInput2.toLowerCase()) ||
+      book.genre.toLowerCase().includes(this.searchInput2.toLowerCase())
+    )
+    console.log(this.filteredBooks);
+
+    if(this.filteredBooks.length > 0) {
+      this.booksFound = true;
+      this.allBooks = [...this.filteredBooks];
+    } else {
+      this.booksFound = false;
+    }
+  }
+
+  async filterLatestBooks(): Promise<void> {
+    this.filteredLatestBooks = this.latestBooks.filter(book =>
+      book.name.toLowerCase().includes(this.searchInput2.toLowerCase()) ||
+      book.auther.toLowerCase().includes(this.searchInput2.toLowerCase()) ||
+      book.publishers.toLowerCase().includes(this.searchInput2.toLowerCase()) ||
+      book.genre.toLowerCase().includes(this.searchInput2.toLowerCase())
+    )
+    console.log(this.filteredLatestBooks);
+
+    if(this.filteredLatestBooks.length > 0) {
+      this.latestBooksFound = true;
+      this.latestBooks = [...this.filteredLatestBooks];
+    } else {
+      this.latestBooksFound = false;
+    }
   }
 }
