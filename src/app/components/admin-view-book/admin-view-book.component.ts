@@ -38,12 +38,11 @@ export class AdminViewBookComponent implements OnInit {
 
   async ngOnInit(): Promise<any> {
     const name = this.route.snapshot.paramMap.get('name');
-    this.viewedBook = name !== null ? name : ''; // Get the user name from the route ...
+    this.viewedBook = name !== null ? name : ''; // Get the username from the route ...
     console.log('Selected Book: ' + this.viewedBook);
 
     try {
       const bookResponse = await axios.get(`http://localhost:8000/api/books/name/${this.viewedBook}`);
-      console.log(bookResponse);
       if(bookResponse.status === 200) {
         this.bookName = bookResponse.data.data.name;
         this.bookAuthor = bookResponse.data.data.auther;
@@ -57,9 +56,8 @@ export class AdminViewBookComponent implements OnInit {
         this.ratings = bookResponse.data.data.rating;
         this.reviews = bookResponse.data.data.reviews;
         this.imageLink = `http://localhost:8000/uploads/${bookResponse.data.data.image.name}`;
-        console.log(this.imageLink);
       } else {
-        console.log('Error fetching data');
+        alert('Error fetching data');
         return;
       }
     } catch (error: any) {
@@ -88,7 +86,7 @@ export class AdminViewBookComponent implements OnInit {
   async updateBook(): Promise<any> {
     const formData = new FormData();
     formData.append('name', this.bookName);
-    formData.append('auther', this.bookAuthor);
+    formData.append('author', this.bookAuthor);
     formData.append('publishers', this.bookPublishers);
     formData.append('description', this.bookDescription);
     formData.append('genre', this.bookGenre);
@@ -102,10 +100,9 @@ export class AdminViewBookComponent implements OnInit {
 
     try {
       const updateBookResponse = await axios.put(`http://localhost:8000/api/books/update/${this.viewedBook}`, formData);
-      console.log(updateBookResponse);
       if(updateBookResponse.status === 200) {
         alert('Book updated successfully');
-        this.router.navigate(['admin-home']);
+        await this.router.navigate(['admin-home']);
       } else {
         alert('Error updating book');
         return;
@@ -118,16 +115,16 @@ export class AdminViewBookComponent implements OnInit {
   async deleteBook(): Promise<any> {
     try {
       const deletBookResponse = await axios.delete(`http://localhost:8000/api/books/delete/${this.viewedBook}`);
-      console.log(deletBookResponse);
       if(deletBookResponse.status == 200) {
         alert('Book deleted successfully');
-        this.router.navigate(['admin-home']);
+        await this.router.navigate(['admin-home']);
       } else {
         alert('Error deleting book');
         return;
       }
     } catch(error: any) {
       console.log('Error', error.message);
+      return;
     }
   }
 

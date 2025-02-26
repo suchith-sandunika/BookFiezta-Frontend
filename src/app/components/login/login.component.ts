@@ -31,7 +31,6 @@ export class LoginComponent {
 
     try {
       const loginResponse = await axios.post('http://localhost:8000/api/auth/login', {email: this.userEmail, password: this.userPassword})
-      console.log(loginResponse);
       if(loginResponse.status == 200) {
         this.isLoading = false;
         this.userService.setUserEmail(this.userEmail);  // Save user data in the service ...
@@ -42,12 +41,14 @@ export class LoginComponent {
         await this.router.navigate(['/home']);
       } else {
         this.isLoading = false;
-        alert('Login Failed. Please Check the data you entered.')
+        alert('Login Failed. Please Check the data you entered.');
+        return;
       }
     } catch (error: any) {
       this.isLoading = false;
       console.error('Error:', error.message);
       alert('An error occurred while trying to log in.');
+      return;
     }
   }
 }

@@ -139,21 +139,20 @@ export class OptionaldataComponent {
     try {
       const updateDOBAGEResponse = await axios.put('http://localhost:8000/api/user/update/dob/age', {userName: this.userName, age: this.ageValue, dob: new Date(this.dateofBirth)});
       console.log(updateDOBAGEResponse);
-      if(updateDOBAGEResponse.status == 200) {
+      if(updateDOBAGEResponse.status == 200 && this.userPhoneNumberAreaCode.length != 0 && this.userPhoneNumber.length != 0) {
         const sendMobileOTPResponse = await axios.post('http://localhost:8000/api/auth/sendOTP/mobile', {mobileNumber: this.fullPhoneNumber});
         console.log(sendMobileOTPResponse);
         if(sendMobileOTPResponse.status == 200) {
           alert('User Data Updated. An OTP has been sent to verify your phone number');
           this.userService.setUserPhoneNumber(this.fullPhoneNumber);
           await this.router.navigate(['verify-mobile']);
-          return;
         } else {
-          console.log('Error Occurred While Sending OTP');
+          alert('Error Occurred While Sending OTP');
           return;
         }
       } else {
-        console.log('Error Occurred');
-        return;
+        alert('Data of Birth and Age Updated Successfully');
+        await this.router.navigate(['login']);
       }
     } catch (error: any) {
       console.log('Error:', error.message);

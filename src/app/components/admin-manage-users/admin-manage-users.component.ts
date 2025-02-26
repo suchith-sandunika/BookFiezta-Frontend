@@ -24,10 +24,8 @@ export class AdminManageUsersComponent implements OnInit{
 
   async ngOnInit(): Promise<void> {
     if(this.searchInput == '') {
-      console.log(this.searchInput);
       await this.fetchAllUsers();
     } else {
-      console.log(this.searchInput);
       await this.filterUsers();
     }
   }
@@ -37,7 +35,6 @@ export class AdminManageUsersComponent implements OnInit{
   }
 
   viewUser(name: string): void {
-    console.log(name);
     this.profileLink = `admin-view-employee/${name}`;
     this.router.navigate([this.profileLink]);
   }
@@ -45,7 +42,6 @@ export class AdminManageUsersComponent implements OnInit{
   async fetchAllUsers(): Promise<void> {
     try {
       const usersResponse = await axios.get('http://localhost:8000/api/users');
-      console.log(usersResponse);
       if(usersResponse.status == 200) {
         this.usersFound = true;
         this.allUsers = usersResponse.data;
@@ -53,12 +49,15 @@ export class AdminManageUsersComponent implements OnInit{
         console.log(this.users);
       } else if(usersResponse.status == 404) {
         this.usersFound = false;
-        console.log('No books found');
+        alert('No books found');
+        return;
       } else {
-        console.error('Error getting books');
+        alert('Error getting books');
+        return;
       }
     } catch (error: any) {
       console.error('Error:', error);
+      return;
     }
   }
 
@@ -67,7 +66,6 @@ export class AdminManageUsersComponent implements OnInit{
       user.name.toLowerCase().includes(this.searchInput.toLowerCase()) ||
       user.email.toLowerCase().includes(this.searchInput.toLowerCase())
     )
-    console.log(this.filteredBooks);
 
     if(this.filteredBooks.length > 0) {
       this.usersFound = true;

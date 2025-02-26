@@ -9,6 +9,7 @@ import { AdminManageUsersComponent } from "../../components/admin-manage-users/a
   selector: 'app-admin-user-homepage',
   imports: [AdminNavbarComponent, AdminHomeComponent, FooterComponent, AdminManageBooksComponent, AdminManageUsersComponent],
   templateUrl: './admin-user-homepage.component.html',
+  standalone: true,
   styleUrl: './admin-user-homepage.component.css'
 })
 

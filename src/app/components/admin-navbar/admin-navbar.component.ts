@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class AdminNavbarComponent {
 
   constructor(private router: Router) {}
+
   logout() {
     alert('Logout Successfull');
     this.router.navigate(['']);

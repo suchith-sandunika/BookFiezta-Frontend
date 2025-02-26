@@ -30,22 +30,33 @@ export class BooksComponent implements OnInit {
 
   async fecthAllBooks(): Promise<any> {
     try {
-      if(this.token) {
-        console.log(this.token);
-        const booksResponse = await axios.get('http://localhost:8000/api/books', {headers: {'Authorization': `Bearer ${this.token}`}});
-        if(booksResponse.status === 200) {
-          this.booksFound = true;
-          this.allBooks = booksResponse.data.data;
-          console.log(this.allBooks);
-        } else {
-          this.booksFound = false;
-          console.error('Failed to fetch books');
-        }
+      const booksResponse = await axios.get('http://localhost:8000/api/books');
+      if(booksResponse.status === 200) {
+        this.booksFound = true;
+        this.allBooks = booksResponse.data.data;
+        console.log(this.allBooks);
       } else {
-        alert('Authentication Error!!');
+        this.booksFound = false;
+        alert('Failed to fetch books');
+        return;
       }
+      // if(this.token) {
+      //   console.log(this.token);
+      //   const booksResponse = await axios.get('http://localhost:8000/api/books', {headers: {'Authorization': `Bearer ${this.token}`}});
+      //   if(booksResponse.status === 200) {
+      //     this.booksFound = true;
+      //     this.allBooks = booksResponse.data.data;
+      //     console.log(this.allBooks);
+      //   } else {
+      //     this.booksFound = false;
+      //     console.error('Failed to fetch books');
+      //   }
+      // } else {
+      //   alert('Authentication Error!!');
+      // }
     } catch (error) {
       console.error('Error', error);
+      return;
     }
   }
 
@@ -58,10 +69,12 @@ export class BooksComponent implements OnInit {
         console.log(this.latestBooks);
       } else {
         this.latestBooksFound = false;
-        console.error('Failed to fetch latest books');
+        alert('Failed to fetch latest books');
+        return;
       }
     } catch (error) {
       console.error('Error', error);
+      return;
     }
   }
 

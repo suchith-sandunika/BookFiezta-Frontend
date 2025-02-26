@@ -29,20 +29,21 @@ export class AdminLoginComponent {
 
     try {
       const loginResponse = await axios.post('http://localhost:8000/api/admin/auth/login', {email: this.adminEmail, password: this.adminPassword})
-      console.log(loginResponse);
       if(loginResponse.status == 200) {
         this.isLoading = false;
         alert('Login Successfull');
         //this.adminService.setAdminEmail(this.adminEmail);  // Save admin data in the service
-        this.router.navigate(['admin-home']);
+        await this.router.navigate(['admin-home']);
       } else {
         this.isLoading = false;
-        alert('Login Failed. Please Check the data you entered.')
+        alert('Login Failed. Please Check the data you entered.');
+        return;
       }
     } catch (error: any) {
       this.isLoading = false;
       console.error('Error:', error.message);
       alert('An error occurred while trying to log in.');
+      return;
     }
   }
 }

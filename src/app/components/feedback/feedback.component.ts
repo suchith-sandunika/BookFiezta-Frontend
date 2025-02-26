@@ -9,6 +9,7 @@ import axios from 'axios';
   standalone: true,
   styleUrl: './feedback.component.css'
 })
+
 export class FeedbackComponent {
   constructor() {}
 
@@ -28,7 +29,6 @@ export class FeedbackComponent {
 
     try {
       const contactUsResponse = await axios.post('http://localhost:8000/api/send-feedback', {name: this.name, email: this.email, message: this.message});
-      console.log(contactUsResponse);
       if(contactUsResponse.status == 200) {
         this.isLoading = false;
         alert('Feedback sent successfully');

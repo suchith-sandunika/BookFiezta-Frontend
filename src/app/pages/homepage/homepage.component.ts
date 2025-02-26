@@ -9,6 +9,7 @@ import { ContactusComponent } from "../../components/contactus/contactus.compone
   selector: 'app-homepage',
   imports: [NavbarComponent, HomeComponent, AboutusComponent, FooterComponent, ContactusComponent],
   templateUrl: './homepage.component.html',
+  standalone: true,
   styleUrl: './homepage.component.css'
 })
 

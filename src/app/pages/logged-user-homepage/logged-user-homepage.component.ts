@@ -62,10 +62,6 @@ export class LoggedUserHomepageComponent implements AfterViewInit {
           this.orderId = statusParts[1] !== 'undefined' ? statusParts[1] : null; // Extract orderId
         }
 
-        console.log('Status:', this.status);
-        console.log('Order ID:', this.orderId);
-        console.log('Token:', this.token);
-
         if (this.orderId != null || this.status != null || this.token != null) {
           if (this.status == 'paid') {
             await this.completePaymentInfo(this.orderId)
@@ -107,13 +103,13 @@ export class LoggedUserHomepageComponent implements AfterViewInit {
   async fetchLoggedUser(): Promise<string> {
     try {
       const sessionUserResponse = await axios.get('http://localhost:8000/api/session/loggedUser');
-      console.log(sessionUserResponse);
       if(sessionUserResponse.status == 200) {
         this.loggedUserEmail = sessionUserResponse.data.data[0].email;
         console.log('Logged User:', this.loggedUserEmail);
         return this.loggedUserEmail;
       } else {
         console.error('Failed to get logged user:', sessionUserResponse.data.message);
+        alert('Failed to get logged user details');
         return 'error';
       }
     } catch (error: any) {
@@ -125,13 +121,10 @@ export class LoggedUserHomepageComponent implements AfterViewInit {
   async completePaymentInfo(id: string | null): Promise<any> {
     try {
       const completeOrderResponse = await axios.post('http://localhost:8000/api/user/complete-order', { orderId: id, date: new Date(), token: this.token });
-      console.log(completeOrderResponse);
       if(completeOrderResponse.status == 200) {
         const updatePurchasedItemResponse = await axios.post('http://localhost:8000/api/user/update-purchased-item', { orderId: id });
-        console.log(updatePurchasedItemResponse);
         if(updatePurchasedItemResponse.status == 200) {
           alert('Payment Successfull');
-          console.log('Payment Successfull');
           return;
         } else {
           alert('Payment Failed');

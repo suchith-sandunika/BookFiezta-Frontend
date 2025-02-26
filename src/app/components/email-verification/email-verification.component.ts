@@ -35,10 +35,9 @@ export class EmailVerificationComponent {
 
     try {
       const verifyOTPResponse = await axios.post('http://localhost:8000/api/auth/verifyOTP', {otp: this.userOTP, userName: this.userName, userEmail: this.userEmail});
-      console.log(verifyOTPResponse);
       if(verifyOTPResponse.status === 200) {
         this.isLoading1 = false;
-        alert('User Registration Successfull');
+        alert('Email Verified Successfully');
         await this.router.navigate(['optional-data-add']); // Redirect to login page if successful registration
       } else {
         this.isLoading1 = false;
@@ -55,27 +54,27 @@ export class EmailVerificationComponent {
     this.isLoading2 = true;
     try {
       const sendOTPAgainResponse = await axios.post('http://localhost:8000/api/auth/sendOTP', {userEmail: this.userEmail});
-      console.log(sendOTPAgainResponse);
       if(sendOTPAgainResponse.status == 200) {
         this.isLoading2 = false;
         alert('OTP Sent Successfully To Your Email');
         const verifyNewlySentOTPResponse = await axios.post('http://localhost:8000/api/auth/verifyOTP', {otp: this.userOTP, userName: this.userName, userEmail: this.userEmail});
-        console.log(verifyNewlySentOTPResponse);
         if(verifyNewlySentOTPResponse.status == 200) {
           this.isLoading2 = false;
           alert('Email Verified Successfully');
-          await this.router.navigate(['login']); // Redirect to login page if successful registration
+          await this.router.navigate(['optional-data-add']); // Redirect to login page if successful registration
         } else {
           this.isLoading2 = false;
           alert('Something went wrong');
         }
       } else {
         this.isLoading2 = false;
-        console.log('error occured while sending the OTP');
+        alert('error occured while sending the OTP');
+        return;
       }
     } catch (error) {
       this.isLoading2 = false;
       console.error('Error verifying user:', error);
+      return;
     }
   }
 

@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
   standalone: true,
   styleUrl: './aboutus.component.css'
 })
+
 export class AboutusComponent {
 
 }

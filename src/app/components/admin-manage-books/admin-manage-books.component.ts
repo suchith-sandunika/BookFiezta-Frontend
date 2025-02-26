@@ -25,10 +25,8 @@ export class AdminManageBooksComponent implements OnInit {
 
   async ngOnInit(): Promise<any> {
     if(this.searchInput == '') {
-      console.log(this.searchInput);
       await this.fetchAllBooks();
     } else {
-      console.log(this.searchInput);
       await this.filterBooks();
     }
   }
@@ -36,19 +34,19 @@ export class AdminManageBooksComponent implements OnInit {
   async fetchAllBooks(): Promise<void> {
     try {
       const booksResponse = await axios.get('http://localhost:8000/api/books');
-      console.log(booksResponse);
       if(booksResponse.status == 200) {
         this.booksFound = true;
         this.allBooks = booksResponse.data.data;
         this.books = [...this.allBooks]; // Make a copy of the array to avoid mutation in the original array ...
-        console.log(booksResponse.data.data.image);
       } else if(booksResponse.status == 404) {
         this.booksFound = false;
       } else {
         console.error('Error getting books');
+        return;
       }
     } catch (error: any) {
       console.error('Error:', error);
+      return;
     }
   }
 

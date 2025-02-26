@@ -41,11 +41,7 @@
                         </div>
                         <!-- Remove Button Column -->
                         <div class="col-2 col-sm-2 text-center">
-                          @if(disableRemoveButton == true) {
-                            <button class="btn btn-sm btn-danger" (click)="removeBookFromCart(item._id)" disabled>Remove</button>
-                          } @else {
-                            <button class="btn btn-sm btn-danger" (click)="removeBookFromCart(item._id)">Remove</button>
-                          }
+                          <button class="btn btn-sm btn-danger" (click)="removeBookFromCart(item._id)">Remove</button>
                         </div>
                       </div>
                     </label>
@@ -75,7 +71,7 @@
         </div>
         <div class="card-body" *ngIf="cartItems.length != 0">
           <div class="card-body">
-            <p class="text-center mt-2">The total balance of the selected items is</p>
+            <p class="text-center mt-2">The total balance of the selected cart items is</p>
             <h3 class="text-center fw-bold mb-3">{{currencyUnit}} {{totalBalance}}</h3>
             <div class="row gap-2 mx-auto align-items-center d-flex justify-content-center">
               @if (totalBalance != '0.00') {
@@ -83,6 +79,7 @@
               } @else {
                 <button class="btn btn-primary w-22" (click)="pay()" disabled>Pay</button>
               }
+              <button class="btn btn-warning w-22 text-white" (click)="addMore()">Add More Books</button>
               <button class="btn btn-danger w-30" (click)="backToHome()">Go Back to Homepage</button>
             </div>
           </div>

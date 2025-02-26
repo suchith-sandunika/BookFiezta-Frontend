@@ -39,7 +39,6 @@ export class AdminAddBookComponent {
   async addBook(): Promise<any> {
     console.log(this.bookName, this.bookAuthor, this.bookPublishers, this.bookDescription, this.bookPrice, this.selectedGenre);
     console.log(this.uploadedImage);
-    console.log('Selected Genre: ', this.selectedGenre);
 
     // Check if all the fields are filled ...
     if (this.bookName.length == 0 || this.bookAuthor.length == 0 || this.bookPublishers.length == 0 || this.bookPrice.length == 0 || this.selectedGenre.length == 0 || Number.isNaN(this.bookPublishedYear)) {
@@ -63,10 +62,9 @@ export class AdminAddBookComponent {
     // Send the data to the server to add the book ...
     try {
       const addBookResponse = await axios.post('http://localhost:8000/api/books/add', formData);
-      console.log(addBookResponse);
       if (addBookResponse.status === 201) {
         alert('Book added successfully');
-        this.router.navigate(['/admin-home']);
+        await this.router.navigate(['/admin-home']);
       } else {
         alert('Error adding book');
         return;

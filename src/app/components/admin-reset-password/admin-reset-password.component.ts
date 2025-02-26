@@ -39,13 +39,12 @@ export class AdminResetPasswordComponent {
     }
 
     try {
-      // Make an API call to reset the password ..
+      // Make an API call to reset the password ...
       const resetPasswordResponse = await axios.post('http://localhost:8000/api/admin/auth/reset-password', {email: this.adminEmail, password: this.adminPassword});
-      console.log(resetPasswordResponse);
       if(resetPasswordResponse.status == 200) {
         this.isLoading = false;
         alert('Password reset successfully');
-        this.router.navigate(['admin-login']);
+        await this.router.navigate(['admin-login']);
       } else {
         this.isLoading = false;
         alert('Failed to reset the password');
@@ -54,6 +53,7 @@ export class AdminResetPasswordComponent {
     } catch (error : any) {
       this.isLoading = false;
       console.error('Error:', error);
+      return;
     }
   }
 }

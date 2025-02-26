@@ -38,7 +38,6 @@ export class MobileVerificationComponent {
 
     try {
       const verifyMobileOTPResponse = await axios.post('http://localhost:8000/api/auth/verifyOTP/mobile', {otp: this.userOTP, userName: this.userName, userEmail: this.userEmail});
-      console.log(verifyMobileOTPResponse);
       if(verifyMobileOTPResponse.status === 200) {
         this.isLoading1 = false;
         alert('Phone Number Updated Successfully');
@@ -51,6 +50,7 @@ export class MobileVerificationComponent {
     } catch (error : any) {
       this.isLoading1 = false;
       console.error('Error verifying user:', error);
+      return;
     }
   }
 
@@ -58,12 +58,10 @@ export class MobileVerificationComponent {
     this.isLoading2 = true;
     try {
       const sendMobileOTPAgainResponse = await axios.post('http://localhost:8000/api/auth/sendOTP/mobile', {mobileNumber: this.userPhoneNumber});
-      console.log(sendMobileOTPAgainResponse);
       if(sendMobileOTPAgainResponse.status == 200) {
         this.isLoading2 = false;
         alert('OTP Sent Successfully To Your Email');
         const verifyNewlySentMobileOTPResponse = await axios.post('http://localhost:8000/api/auth/verifyOTP/mobile', {otp: this.userOTP, userName: this.userName, mobileNumber: this.userPhoneNumber});
-        console.log(verifyNewlySentMobileOTPResponse);
         if(verifyNewlySentMobileOTPResponse.status == 200) {
           this.isLoading2 = false;
           alert('Phone Number Updated Successfully');
@@ -71,14 +69,17 @@ export class MobileVerificationComponent {
         } else {
           this.isLoading2 = false;
           alert('Something went wrong');
+          return;
         }
       } else {
         this.isLoading2 = false;
-        console.log('error occured while sending the OTP');
+        console.log('error occurred while sending the OTP');
+        return;
       }
     } catch (error) {
       this.isLoading2 = false;
       console.error('Error verifying user:', error);
+      return;
     }
   }
 

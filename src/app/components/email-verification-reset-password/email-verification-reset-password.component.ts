@@ -34,7 +34,7 @@ export class EmailVerificationResetPasswordComponent {
         this.isLoading = false;
         this.userService.setUserEmail(this.userEmail);
         alert('Email verified successfully');
-        this.router.navigate(['reset-password']);
+        await this.router.navigate(['reset-password']);
       } else {
         this.isLoading = false;
         alert('Failed to verify the email');

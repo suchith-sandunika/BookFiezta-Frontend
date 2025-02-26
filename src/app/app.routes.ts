@@ -10,8 +10,8 @@ import { LoggedUserHomepageComponent } from './pages/logged-user-homepage/logged
 import { ProfileComponent } from './components/profile/profile.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ViewBookDetailsComponent } from './components/view-book-details/view-book-details.component';
-import {OptionaldataComponent} from './components/optionaldata/optionaldata.component';
-import {MobileVerificationComponent} from './components/mobile-verification/mobile-verification.component';
+import { OptionaldataComponent } from './components/optionaldata/optionaldata.component';
+import { MobileVerificationComponent } from './components/mobile-verification/mobile-verification.component';
 
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminResetPasswordComponent } from './components/admin-reset-password/admin-reset-password.component';

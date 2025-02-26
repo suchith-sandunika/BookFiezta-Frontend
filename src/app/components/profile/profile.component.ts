@@ -43,7 +43,6 @@ export class ProfileComponent {
     try {
       // Fetch the user data ...
       const loggeduserDataResponse = await axios.get(`http://localhost:8000/api/users/searchByName/${this.loggedUserName}`);
-      console.log(loggeduserDataResponse);
       if(loggeduserDataResponse.status === 200) {
         this.userName = loggeduserDataResponse.data.data.name;
         this.userEmail = loggeduserDataResponse.data.data.email;
@@ -59,11 +58,12 @@ export class ProfileComponent {
         // Fetch the user's purchased books ...
         this.purchasedBooks = loggeduserDataResponse.data.data.purchasedBooks;
       } else {
-        console.log('Error fetching data');
+        alert('Error fetching data');
         return;
       }
     } catch (error: any) {
       console.error('Error:', error.message);
+      return;
     }
   }
 
@@ -100,11 +100,8 @@ export class ProfileComponent {
       formdata.append('image', this.uploadedImage);
     }
 
-    console.log(formdata);
-
     try {
       const updateProfileResponse = await axios.put(`http://localhost:8000/api/user/profile/update/${this.loggedUserName}`, formdata);
-      console.log(updateProfileResponse);
       if(updateProfileResponse.status === 200) {
         this.isLoading = false;
         alert('Profile updated successfully');
@@ -120,6 +117,7 @@ export class ProfileComponent {
     } catch (error: any) {
       this.isLoading = false;
       console.error('Error:', error.message);
+      return;
     }
   }
 
@@ -128,7 +126,6 @@ export class ProfileComponent {
     this.isLoading = true;
     try {
       const deleteProfileResponse = await axios.delete(`http://localhost:8000/api/user/profile/delete/${this.loggedUserName}`);
-      console.log(deleteProfileResponse);
       if(deleteProfileResponse.status === 200) {
         this.isLoading = false;
         alert('Profile deleted successfully');
@@ -141,6 +138,7 @@ export class ProfileComponent {
     } catch (error: any) {
       this.isLoading = false;
       console.error('Error:', error.message);
+      return;
     }
   }
 

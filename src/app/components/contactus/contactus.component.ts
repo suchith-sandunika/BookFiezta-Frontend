@@ -29,7 +29,6 @@ export class ContactusComponent {
 
     try {
       const contactUsResponse = await axios.post('http://localhost:8000/api/contact-us', {name: this.name, email: this.email, message: this.message});
-      console.log(contactUsResponse);
       if(contactUsResponse.status == 200) {
         this.isLoading = false;
         alert('Message sent successfully');
@@ -44,6 +43,7 @@ export class ContactusComponent {
     } catch (error: any) {
       this.isLoading = false;
       console.log("Error submitting form", error);
+      return;
     }
   }
 }

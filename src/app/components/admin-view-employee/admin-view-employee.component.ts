@@ -22,13 +22,12 @@ export class AdminViewEmployeeComponent {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   async ngOnInit(): Promise<any> {
-    // Get the user name from the route parameter and fetch the user data...
+    // Get the username from the route parameter and fetch the user data...
     const name = this.route.snapshot.paramMap.get('name');
     this.userName = name !== null ? name : ''; // Get the user name from the route ...
     // Fetch the user data ...
     try {
        const userDataResponse = await axios.get(`http://localhost:8000/api/users/searchByName/${this.userName}`);
-       console.log(userDataResponse);
        if(userDataResponse.status == 200) {
          this.userEmail = userDataResponse.data.data.email;
          this.joinedDate = userDataResponse.data.data.createdDate;
@@ -36,11 +35,11 @@ export class AdminViewEmployeeComponent {
          this.cart = userDataResponse.data.data.cart;
          this.imageLink = `http://localhost:8000/uploads/${userDataResponse.data.data.image.name}`;
        } else {
-         console.error('Failed to fetch user data:');
+         alert('Failed to fetch user data');
          return;
        }
     } catch (error: any) {
-      console.error('Error Occured:', error);
+      console.error('Error Occurred:', error);
       return;
     }
   }
@@ -48,12 +47,11 @@ export class AdminViewEmployeeComponent {
   async deleteUser(): Promise<any> {
     try {
       const deleteUserResponse = await axios.delete(`http://localhost:8000/api/user/profile/delete/${this.userName}`);
-      console.log(deleteUserResponse);
       if(deleteUserResponse.status == 200) {
         alert('User deleted successfully!');
-        this.router.navigate(['/admin-home']);  // Navigate to admin homepage ...
+        await this.router.navigate(['/admin-home']);  // Navigate to admin homepage ...
       } else {
-        console.error('Failed to delete user:');
+        alert('Failed to delete user:');
         return;
       }
     } catch(error: any) {

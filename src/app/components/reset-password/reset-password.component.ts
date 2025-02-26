@@ -41,11 +41,10 @@ export class ResetPasswordComponent {
     try {
       // Make an API call to reset the password ..
       const resetPasswordResponse = await axios.post('http://localhost:8000/api/auth/reset-password', {email: this.userEmail, password: this.userPassword});
-      console.log(resetPasswordResponse);
       if(resetPasswordResponse.status == 200) {
         this.isLoading = false;
         alert('Password reset successfully');
-        this.router.navigate(['login']);
+        await this.router.navigate(['login']);
       } else {
         this.isLoading = false;
         alert('Failed to reset the password');
@@ -54,6 +53,7 @@ export class ResetPasswordComponent {
     } catch (error : any) {
       this.isLoading = false;
       console.error('Error:', error);
+      return;
     }
   }
 }

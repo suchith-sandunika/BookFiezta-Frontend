@@ -69,7 +69,6 @@ export class RegisterComponent {
     try {
       // Call the API End Point to register the user ...
       const response = await axios.post('http://localhost:8000/api/auth/register', {name: this.userName, email: this.userEmail, password: this.userPassword});
-      console.log(response);
       if(response.status !== 201) {
         alert('Registration failed');
         this.isLoading = false;
@@ -92,6 +91,7 @@ export class RegisterComponent {
     } catch (error : any) {
       this.isLoading = false;
       console.error(error);
+      return;
     }
   }
 }
