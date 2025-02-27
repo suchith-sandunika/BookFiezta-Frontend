@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import axios from 'axios';
-import {SessionService} from '../../services/session/session.service';
+import {SessionService} from '../../../../services/session/session.service';
 
 @Component({
   selector: 'app-view-book-details',

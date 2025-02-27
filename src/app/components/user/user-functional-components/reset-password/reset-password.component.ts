@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import axios from 'axios';
-import { UserService } from '../../services/user/user.service';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   selector: 'app-reset-password',

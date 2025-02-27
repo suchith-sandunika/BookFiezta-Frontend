@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { BooksComponent } from '../../components/books/books.component';
-import { FooterComponent } from '../../components/footer/footer.component';
-import { LoggedUserNavbarComponent } from '../../components/logged-user-navbar/logged-user-navbar.component';
-import { LoggedUserHomeComponent } from "../../components/logged-user-home/logged-user-home.component";
-import { FeedbackComponent } from '../../components/feedback/feedback.component';
+import { BooksComponent } from '../../components/user/user-functional-components/books/books.component';
+import { FooterComponent } from '../../components/general-components/footer/footer.component';
+import { LoggedUserNavbarComponent } from '../../components/user/user-general-components/logged-user-navbar/logged-user-navbar.component';
+import { LoggedUserHomeComponent } from "../../components/user/user-general-components/logged-user-home/logged-user-home.component";
+import { FeedbackComponent } from '../../components/user/user-general-components/feedback/feedback.component';
 import axios from 'axios';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../services/session/session.service';
@@ -124,8 +124,14 @@ export class LoggedUserHomepageComponent implements AfterViewInit {
       if(completeOrderResponse.status == 200) {
         const updatePurchasedItemResponse = await axios.post('http://localhost:8000/api/user/update-purchased-item', { orderId: id });
         if(updatePurchasedItemResponse.status == 200) {
-          alert('Payment Successfull');
-          return;
+          const sendPaymentReceiptResponse = await axios.post('http://localhost:8000/api/user/send/payment-receipt', { email: this.loggedUserEmail, orderId: id });
+          if(sendPaymentReceiptResponse.status == 200) {
+            alert('Payment done Successfully and Receipt sent to your email');
+            return;
+          } else {
+            alert('Payment Receipt sending failed');
+            return;
+          }
         } else {
           alert('Payment Failed');
           return;

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import axios from 'axios';
 import {NgForOf} from '@angular/common';
-import {SessionService} from '../../services/session/session.service';
+import {SessionService} from '../../../../services/session/session.service';
 
 @Component({
   selector: 'app-profile',

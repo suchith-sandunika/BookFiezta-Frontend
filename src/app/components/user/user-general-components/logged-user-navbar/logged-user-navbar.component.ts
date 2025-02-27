@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import axios from 'axios';
-import { UserService } from '../../services/user/user.service';
+import { UserService } from '../../../../services/user/user.service';
 import { Router } from '@angular/router';
-import {AuthService} from '../../services/auth/auth.service';
+import {AuthService} from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-logged-user-navbar',

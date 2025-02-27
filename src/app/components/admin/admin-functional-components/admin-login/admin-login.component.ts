@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AdminService } from '../../services/admin/admin.service';
+import { AdminService } from '../../../../services/admin/admin.service';
 import axios from 'axios';
 import { FormsModule } from '@angular/forms';
 

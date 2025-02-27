@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
 import {FormsModule} from '@angular/forms';
-import { UserService } from '../../services/user/user.service';
-import {AuthService} from '../../services/auth/auth.service';
-import {AlertService} from '../../services/alert/alert.service';
+import { UserService } from '../../../../services/user/user.service';
+import {AuthService} from '../../../../services/auth/auth.service';
+import {AlertService} from '../../../../services/alert/alert.service';
 
 @Component({
   selector: 'app-login',

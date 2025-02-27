@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { routes } from '../../app.routes';
+import { routes } from '../../../../app.routes';
 import axios from 'axios';
 import { CommonModule } from '@angular/common';
 
