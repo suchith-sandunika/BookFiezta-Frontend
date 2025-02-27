@@ -21,11 +21,17 @@
             </div>
             <div class="form-group">
               <label for="password" class="mb-2">Password</label>
-              <input type="password" class="form-control mb-2" id="password" placeholder="Enter password" required  [(ngModel)]="userPassword" name="userPassword">
+              <div class="password-container">
+                <input [type]="passwordFieldType" class="form-control mb-2" id="password" placeholder="Enter password" required [(ngModel)]="userPassword" name="userPassword">
+                <i class="fas" [ngClass]="passwordFieldType === 'password' ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePassword()"></i>
+              </div>
             </div>
             <div class="form-group">
               <label for="confirm-password" class="mb-2">Confirm Password</label>
-              <input type="password" class="form-control mb-2" id="confirm-password" placeholder="Confirm password" required  [(ngModel)]="userConfirmPassword" name="userConfirmPassword">
+              <div class="password-container">
+                <input [type]="confirmPasswordFieldType" class="form-control mb-2" id="confirm-password" placeholder="Confirm password" required [(ngModel)]="userConfirmPassword" name="userConfirmPassword">
+                <i class="fas" [ngClass]="confirmPasswordFieldType === 'password' ? 'fa-eye' : 'fa-eye-slash'" (click)="toggleConfirmPassword()"></i>
+              </div>
             </div>
             <p class="text-center pt-2">Already Have An Account? <a href="/login" class="text-decoration-none">Login</a></p>
             <div class="d-flex align-items-center justify-content-center">

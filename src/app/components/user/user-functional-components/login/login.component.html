@@ -13,7 +13,10 @@
             </div>
             <div class="form-group">
               <label for="password" class="mb-2">Password</label>
-              <input type="password" class="form-control mb-2" id="password" placeholder="Enter password" required [(ngModel)]="userPassword" name="userPassword">
+              <div class="password-container">
+                <input [type]="passwordFieldType" class="form-control mb-2" id="password" placeholder="Enter password" required [(ngModel)]="userPassword" name="userPassword">
+                <i class="fas" [ngClass]="passwordFieldType === 'password' ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePassword()"></i>
+              </div>
             </div>
             <p class="text-center pt-2">Forgot Password? <a href="/verify-email-reset-password" class="text-decoration-none">Reset Password</a></p>
             <p class="text-center">Don't Have An Account? <a href="/register" class="text-decoration-none">Register</a></p>

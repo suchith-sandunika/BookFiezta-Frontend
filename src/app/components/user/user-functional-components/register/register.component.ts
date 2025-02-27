@@ -3,10 +3,11 @@ import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import axios from 'axios';
 import { UserService } from '../../../../services/user/user.service';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule],
+  imports: [FormsModule, NgClass],
   standalone: true,
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
@@ -19,7 +20,18 @@ export class RegisterComponent {
   userConfirmPassword: string = '';
   isLoading: boolean = false;
 
+  passwordFieldType: string = 'password';
+  confirmPasswordFieldType: string = 'password';
+
   constructor(private router: Router, private userService: UserService) {}
+
+  togglePassword() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
+
+  toggleConfirmPassword() {
+    this.confirmPasswordFieldType = this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
+  }
 
   checkPasswordStrength(): boolean {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;

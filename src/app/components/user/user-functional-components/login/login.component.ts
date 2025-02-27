@@ -5,10 +5,11 @@ import {FormsModule} from '@angular/forms';
 import { UserService } from '../../../../services/user/user.service';
 import {AuthService} from '../../../../services/auth/auth.service';
 import {AlertService} from '../../../../services/alert/alert.service';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule, NgClass],
   templateUrl: './login.component.html',
   standalone: true,
   styleUrl: './login.component.css'
@@ -19,6 +20,12 @@ export class LoginComponent {
   userEmail: string = '';
   userPassword: string = '';
   isLoading: boolean = false;
+
+  passwordFieldType: string = 'password';
+
+  togglePassword() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
 
   async login() {
     this.isLoading = true;
