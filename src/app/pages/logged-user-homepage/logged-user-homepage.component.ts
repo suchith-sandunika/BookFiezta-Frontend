@@ -1,13 +1,14 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BooksComponent } from '../../components/user/user-functional-components/books/books.component';
-import { FooterComponent } from '../../components/general-components/footer/footer.component';
+import { FooterComponent } from '../../components/general/footer/footer.component';
 import { LoggedUserNavbarComponent } from '../../components/user/user-general-components/logged-user-navbar/logged-user-navbar.component';
 import { LoggedUserHomeComponent } from "../../components/user/user-general-components/logged-user-home/logged-user-home.component";
 import { FeedbackComponent } from '../../components/user/user-general-components/feedback/feedback.component';
 import axios from 'axios';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../services/session/session.service';
+import {UserService} from '../../services/user/user.service';
 
 @Component({
   selector: 'app-logged-user-homepage',
@@ -23,8 +24,9 @@ export class LoggedUserHomepageComponent implements AfterViewInit {
   status: string | null = '';
   orderId: string | null = '';
   token: string = '';
+  originURL: string = '';
 
-  constructor(private route: ActivatedRoute, private router: Router, private sessionService: SessionService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private sessionService: SessionService) {}
 
   ngAfterViewInit() {
     this.route.fragment.subscribe(fragment => {
@@ -42,6 +44,14 @@ export class LoggedUserHomepageComponent implements AfterViewInit {
   }
 
   async ngOnInit(): Promise<any> {
+    this.originURL = window.location.origin;
+
+    if(this.originURL.length != 0) {
+      await this.fetchURL(this.originURL);
+    } else {
+      return;
+    }
+
     await this.fetchLoggedUser();
     // this.route.queryParams.subscribe(params => {
     //   this.scrollToSection(params['section']);
@@ -138,6 +148,21 @@ export class LoggedUserHomepageComponent implements AfterViewInit {
         }
       } else {
         alert('Error Occurred During the Payment. Try Again');
+        return;
+      }
+    } catch (error: any) {
+      console.error('Error:', error.message);
+      return;
+    }
+  }
+
+  async fetchURL(url: string): Promise<any> {
+    try {
+      const urlResponse = await axios.post('http://localhost:8000/api/frontend-url', { url: url });
+      if(urlResponse.status == 200) {
+        console.log('Frontend Url:', urlResponse.data);
+      } else {
+        console.log('Error Fetching frontend url');
         return;
       }
     } catch (error: any) {

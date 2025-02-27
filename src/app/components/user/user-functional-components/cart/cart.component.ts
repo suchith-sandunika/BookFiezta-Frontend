@@ -25,20 +25,19 @@ export class CartComponent implements OnInit {
   currencyAmount: number = 0;
   totalBalance: string = '0.00';
   purchasingItems: Array<any> = [];
+  appURL: string = '';
 
   constructor(private router: Router, private route: ActivatedRoute, private sessionService: SessionService) {}
 
   async ngOnInit(): Promise<void> {
     const name = this.route.snapshot.paramMap.get('name');
     this.userName = name !== null ? name : ''; // Get the username from the route ...
-    console.log('User: ' + this.userName);
-
+    this.appURL = window.location.origin;
     try {
       const cartResponse = await axios.get(`http://localhost:8000/api/user/cart/${this.userName}`);
       if(cartResponse.status == 200) {
         this.userId = cartResponse.data.id;
         this.cartItems = cartResponse.data.data; // Populate the cart items array with the response data ...
-        console.log('User Cart:',this.cartItems);
       } else if(cartResponse.status == 204) {
         this.cartItems = [];
         alert('Cart is empty');
@@ -68,7 +67,6 @@ export class CartComponent implements OnInit {
   }
 
   async removeBookFromCart(id: string): Promise<any> {
-    this.totalBalance = '';
     const index = this.cartItems.findIndex(item => item._id === id);
     try {
       const removeBookFromCartResponse = await axios.patch('http://localhost:8000/api/user/cart/remove/book', {bookId: id, userId: this.userId});
@@ -76,6 +74,7 @@ export class CartComponent implements OnInit {
         alert('Book removed successfully');
         // remove the relevant item from cartItems array ...
         this.cartItems.splice(index, 1);
+        window.location.reload();
       } else {
         alert('An error occurred while removing the book from the cart');
         return;
@@ -86,18 +85,19 @@ export class CartComponent implements OnInit {
     }
   }
 
-  onCheckboxChange(event: any, id: string, price: string, name: string) {
+  onCheckboxChange(event: any, id: string, name: string, publishers: string, price: string) {
     // get the numeric value of the price ...
     const priceValue = price.split(" ");
     this.currencyUnit = priceValue[0];
     // set the numeric value to a float ...
     this.currencyAmount = parseFloat(priceValue[1]);
-    const priceValueWithoutDecimals = priceValue[1].split(".");
+    // const priceValueWithoutDecimals = priceValue[1].split(".");
     if(event.target.checked) {
       // checkbox ticked ...
       this.total = this.total + this.currencyAmount;
       this.totalBalance = this.total.toFixed(2);
-      this.purchasingItems.push({ "id": id, "name": name, "priceValue": parseInt(priceValueWithoutDecimals[0]) });
+      this.purchasingItems.push({ "bookId": id, "bookName": name, "publishers": publishers, "priceValue": parseFloat(String(this.currencyAmount)), "priceUnit": this.currencyUnit  });
+      console.log(this.purchasingItems);
     } else {
       // checkbox tick removed ...
       this.total = this.total - this.currencyAmount;
@@ -109,11 +109,10 @@ export class CartComponent implements OnInit {
   async pay(): Promise<any> {
     try {
       const createOrderResponse = await axios.post('http://localhost:8000/api/user/create-order', { items: this.purchasingItems, userId: this.userId });
-      console.log(createOrderResponse);
       if(createOrderResponse.status == 201) {
         console.log('Order Created');
         const orderId = createOrderResponse.data.data._id;
-        const paymentResponse = await axios.post('http://localhost:8000/api/cart/pay', { items: this.purchasingItems, orderId: orderId });
+        const paymentResponse = await axios.post('http://localhost:8000/api/cart/pay', { items: this.purchasingItems, orderId: orderId, url: this.appURL });
         if(paymentResponse.status == 200) {
           console.log(paymentResponse.data.url);
           window.location.href = paymentResponse.data.url;

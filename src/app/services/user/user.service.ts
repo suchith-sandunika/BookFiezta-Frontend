@@ -22,8 +22,8 @@ export class UserService {
     this.userName = name;
   }
 
-  setLoggedUserDetails(name: string) {
-    this.userName = name;
+  setLoggedUserDetails(email: string) {
+    this.userEmail = email;
   }
 
   getUserEmail(): string {
@@ -35,7 +35,7 @@ export class UserService {
   }
 
   getLoggedUserDetails(): string {
-    return this.userName;
+    return this.userEmail;
   }
 
   getUserPhoneNumber(): string {

@@ -30,8 +30,6 @@ export class LoggedUserNavbarComponent implements OnInit {
       if(sessionUserResponse.status == 200) {
         this.loggedUserId = sessionUserResponse.data.data[0].userId;
         this.loggedUserEmail = sessionUserResponse.data.data[0].email;
-        console.log(this.loggedUserId);
-        console.log('Logged User:', this.loggedUserEmail);
         await this.fetchUserData(this.loggedUserEmail);
         this.fetchUserCart(this.loggedUserName);
       } else {

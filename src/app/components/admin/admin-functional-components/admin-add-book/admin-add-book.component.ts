@@ -74,4 +74,8 @@ export class AdminAddBookComponent {
       return;
     }
   }
+
+  backToHome(): any {
+    this.router.navigate(['admin-home']);
+  }
 }

@@ -14,7 +14,7 @@ import {AlertService} from '../../../../services/alert/alert.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor(private router: Router, private userService: UserService, private authService: AuthService, private alertService: AlertService) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   userEmail: string = '';
   userPassword: string = '';
@@ -33,7 +33,6 @@ export class LoginComponent {
       const loginResponse = await axios.post('http://localhost:8000/api/auth/login', {email: this.userEmail, password: this.userPassword})
       if(loginResponse.status == 200) {
         this.isLoading = false;
-        this.userService.setUserEmail(this.userEmail);  // Save user data in the service ...
         this.authService.loginAuth();
         alert('Login Successfull');
         //this.alertService.showMessage('Login Successful!', 'success');

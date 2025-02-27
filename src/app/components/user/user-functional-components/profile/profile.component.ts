@@ -46,7 +46,7 @@ export class ProfileComponent {
       if(loggeduserDataResponse.status === 200) {
         this.userName = loggeduserDataResponse.data.data.name;
         this.userEmail = loggeduserDataResponse.data.data.email;
-        this.joinedDate = loggeduserDataResponse.data.data.createdDate;
+        this.joinedDate = loggeduserDataResponse.data.data.createdDate.split('T')[0];
         this.userImage = loggeduserDataResponse?.data?.data?.image?.name || null;
 
         if(this.userImage) {

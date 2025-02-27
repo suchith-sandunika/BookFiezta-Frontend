@@ -21,11 +21,15 @@
                       <div class="row align-items-center g-3">
                         <!-- Checkbox Column -->
                         <div class="col-2 col-sm-1 text-center">
-                          <input type="checkbox" name="cart" value="item._id" class="mt-2" (change)="onCheckboxChange($event, item._id, item.price, item.name)">
+                          <input type="checkbox" name="cart" value="item._id" class="mt-2" (change)="onCheckboxChange($event, item._id, item.name, item.publishers, item.price)">
                         </div>
                         <!-- Image Column -->
                         <div class="col-4 col-sm-3 text-center">
-                          <img [src]="'http://localhost:8000/uploads/' + item.image.name" class="img-fluid rounded" style="max-width: 100px;">
+                          @if(item.image.name) {
+                            <img [src]="'http://localhost:8000/uploads/' + item.image.name" class="img-fluid rounded" style="max-width: 100px;">
+                          } @else {
+                            <img src="https://www.shareicon.net/data/128x128/2017/03/02/880210_images_512x512.png" class="img-fluid rounded" style="max-width: 100px;">
+                          }
                         </div>
                         <!-- Details Column -->
                         <div class="col-12 col-sm-6">
