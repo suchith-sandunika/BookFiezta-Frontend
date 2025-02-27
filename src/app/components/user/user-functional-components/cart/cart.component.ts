@@ -68,6 +68,7 @@ export class CartComponent implements OnInit {
   }
 
   async removeBookFromCart(id: string): Promise<any> {
+    this.totalBalance = '';
     const index = this.cartItems.findIndex(item => item._id === id);
     try {
       const removeBookFromCartResponse = await axios.patch('http://localhost:8000/api/user/cart/remove/book', {bookId: id, userId: this.userId});

@@ -1,5 +1,5 @@
-<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
-  <div class="card mt-2 w-50 mx-auto">
+<div class="container-fluid d-flex justify-content-center align-items-center">
+  <div class="card mt-2 w-50 mx-auto mb-2">
     <div class="card-header border-0 bg-white">
       <div class="card-title">
         <h3 class="text-center">User Profile</h3>
@@ -71,26 +71,15 @@
         <h5 class="text-center mt-3">Joined Date: {{joinedDate}}</h5>
         <h5 class="text-center mt-3">Books Purchased:
           @if(purchasedBooks.length > 0) {
-            <div class="card card-body mt-2 mb-2 border-0">
-              <ul>
-                @for(index of purchasedBooks; track index; let i = $index) {
-                  <li>{{purchasedBooks[index]}}</li>
-                }
-              </ul>
-            </div>
-          } @else {
-            <div class="card card-body mt-2 mb-2 border-0">
-              <span class="text-danger">No Books Purchased!</span>
-            </div>
-          }
-        </h5>
-        <h5 class="text-center mt-3">User Cart:
-          @if(cart.length > 0) {
-            <div class="card card-body mt-2 mb-2 me-5 ms-5" *ngFor="let item of cart; let i = index; trackBy: trackByIndex">
+            <div class="card card-body mt-2 mb-2 me-5 ms-5" *ngFor="let item of purchasedBooks; let i = index; trackBy: trackByIndex">
               <div class="row align-items-center g-3">
                 <!-- Image Column -->
                 <div class="col-4 col-sm-2 text-center">
-                  <img [src]="'http://localhost:8000/uploads/' + item.image.name" class="img-fluid rounded" style="max-width: 100px;">
+                  @if(item.image.name) {
+                    <img [src]="'http://localhost:8000/uploads/' + item.image.name" class="img-fluid rounded" style="max-width: 100px;" alt="book Image">
+                  } @else {
+                    <img src="https://www.shareicon.net/data/128x128/2017/03/02/880210_images_512x512.png" class="img-fluid rounded" alt="book Image" style="max-width: 100px;">
+                  }
                 </div>
                 <!-- Details Column -->
                 <div class="col-12 col-sm-10">
@@ -108,7 +97,39 @@
             </div>
           } @else {
             <div class="card card-body mt-2 mb-2 border-0">
-              <span class="text-danger">Cart is Empty!</span>
+              <span class="text-danger">Oops! No Purchased Books Found</span>
+            </div>
+          }
+        </h5>
+        <h5 class="text-center mt-3">User Cart:
+          @if(cart.length > 0) {
+            <div class="card card-body mt-2 mb-2 me-5 ms-5" *ngFor="let item of cart; let i = index; trackBy: trackByIndex">
+              <div class="row align-items-center g-3">
+                <!-- Image Column -->
+                <div class="col-4 col-sm-2 text-center">
+                  @if(item.image.name) {
+                    <img [src]="'http://localhost:8000/uploads/' + item.image.name" class="img-fluid rounded" style="max-width: 100px;" alt="book Image">
+                  } @else {
+                    <img src="https://www.shareicon.net/data/128x128/2017/03/02/880210_images_512x512.png" class="img-fluid rounded" alt="book Image" style="max-width: 100px;">
+                  }
+                </div>
+                <!-- Details Column -->
+                <div class="col-12 col-sm-10">
+                  <div class="row">
+                    <div class="col-12 col-md-8">
+                      <p class="mb-1 fw-bold">Name: {{ item.name }}</p>
+                      <p class="mb-1 text-muted">From: {{ item.publishers }}</p>
+                    </div>
+                    <div class="col-12 col-md-4 text-md-end">
+                      <p class="mb-1 fw-semibold">Price: {{ item.price }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          } @else {
+            <div class="card card-body mt-2 mb-2 border-0">
+              <span class="text-danger">Oops! Cart is Empty!</span>
             </div>
           }
         </h5>
